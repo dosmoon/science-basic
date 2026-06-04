@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>动点函数探究题 · 参数化生成器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F2E9; --paper2:#FBF8F1; --ink:#1d2630; --ink2:#5b6470;
+    --line:#d9d2c2; --line2:#cfc7b4; --blue:#1a5fa3; --blue-soft:#e7f0f8;
+    --coral:#bf4a22; --green:#1f7a52;
+    --shadow:0 1px 0 #fff inset, 0 8px 24px -16px rgba(29,38,48,.4);
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;line-height:1.6;
+    background-image:linear-gradient(rgba(190,180,155,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(190,180,155,.10) 1px,transparent 1px);background-size:26px 26px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 20px 60px}
+  header h1{font-family:"Newsreader",serif;font-weight:600;font-size:30px;line-height:1.15;margin:0 0 4px;letter-spacing:-.01em}
+  header .sub{color:var(--ink2);font-size:14.5px;max-width:780px;margin:0}
+  header .hr{height:2px;background:var(--ink);opacity:.85;margin:16px 0 0;width:54px}
+
+  .params{margin:20px 0 16px;padding:16px 18px;background:var(--paper2);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  .params h3{margin:0 0 12px;font-family:"Newsreader",serif;font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px}
+  .params h3 .pill{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:400;color:var(--ink2);background:#efe9da;padding:2px 8px;border-radius:20px}
+  .sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 22px}
+  .pslab{display:flex;align-items:center;gap:10px}
+  .pslab .nm{font-family:"JetBrains Mono",monospace;font-size:13px;width:62px;color:var(--ink)}
+  .pslab .nm em{color:var(--ink2);font-style:normal;font-size:11px}
+  .pslab input[type=range]{flex:1;accent-color:var(--blue)}
+  .pslab .num{font-family:"JetBrains Mono",monospace;font-size:13px;width:42px;text-align:right;color:var(--blue)}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:0 0 18px}
+  .toolbar .grp{display:flex;align-items:center;gap:8px}
+  .toolbar label{font-size:13px;color:var(--ink2)}
+  button{font-family:inherit;font-size:13.5px;cursor:pointer;background:var(--paper2);color:var(--ink);border:1px solid var(--line2);border-radius:9px;padding:7px 13px;transition:transform .08s,background .15s}
+  button:hover{background:#fff} button:active{transform:scale(.97)}
+  button.primary{background:var(--ink);color:var(--paper2);border-color:var(--ink)} button.primary:hover{background:#000}
+  button.accent{background:var(--blue);color:#fff;border-color:var(--blue)} button.accent:hover{filter:brightness(1.07)}
+  select{padding:6px 9px;border:1px solid var(--line2);border-radius:8px;background:var(--paper2);font-size:13px;color:var(--ink)}
+  input[type=range]{width:120px} .val{font-family:"JetBrains Mono",monospace;font-size:12.5px;min-width:18px;text-align:center}
+  .chk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink2)}
+
+  .panes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.panes{grid-template-columns:1fr}}
+  .card{background:var(--paper2);border:1px solid var(--line);border-radius:14px;padding:14px 14px 10px;box-shadow:var(--shadow)}
+  .card h2{font-family:"Newsreader",serif;font-weight:600;font-size:16.5px;margin:0 0 8px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .card h2 .tag{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink2);font-weight:400}
+  svg,canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .pane-svg{background:linear-gradient(rgba(120,135,150,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(120,135,150,.07) 1px,transparent 1px);background-size:25px 25px;background-color:#fcfaf4;border:1px solid var(--line)}
+  .status{font-size:12.5px;margin:6px 2px 0;min-height:18px}
+  .status.ok{color:var(--green)} .status.warn{color:var(--coral)}
+  .derived{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink2);margin:4px 2px 0}
+
+  .tablecard{margin-top:16px} table{border-collapse:collapse;width:100%;font-family:"JetBrains Mono",monospace;font-size:12.5px}
+  th,td{border:1px solid var(--line2);padding:5px 4px;text-align:center}
+  thead th{background:var(--blue-soft);color:#0e3f6b;font-weight:500}
+  tbody th{background:#efe9da;color:var(--ink);font-weight:500;white-space:nowrap}
+  td.hl,th.hl{background:#fff7e8}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--ink2);margin:0 2px 8px}
+  .dotL{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:-1px;margin-right:5px}
+  .problemcard{margin-top:16px} .problemcard h2 button{padding:4px 10px;font-size:12px}
+  .qtext{font-size:14.5px;line-height:1.75} .qtext .blank{display:inline-block;min-width:42px;border-bottom:1.5px solid var(--ink2);text-align:center}
+  .qtext .step{margin:6px 0}
+  .answer{margin-top:12px;padding:12px 14px;border-left:3px solid var(--green);background:#eef6f0;border-radius:0 10px 10px 0;font-size:14px}
+  .answer.hidden{display:none} .answer b{color:var(--green)} .ansnum{font-family:"JetBrains Mono",monospace;font-weight:500}
+  .answer .ahead{font-family:"Newsreader",serif;font-weight:600;font-size:15px;color:var(--green);margin:16px 0 4px}
+  .answer .ahead:first-child{margin-top:0}
+  .answer p{margin:6px 0} .answer .caseline{padding-left:4px}
+  .answer .stepnote{color:var(--ink2);font-size:13px;line-height:1.6}
+  .ans2blk{margin:6px 0 4px}
+  .foot{margin-top:22px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+  code{font-family:"JetBrains Mono",monospace;background:#efe9da;padding:1px 5px;border-radius:5px;font-size:.92em}
+  .tablecard.flash{animation:tflash .55s ease-out}
+  @keyframes tflash{0%{box-shadow:0 0 0 2px var(--blue) inset, var(--shadow)}100%{box-shadow:var(--shadow)}}
+  .dim{opacity:.4;transition:opacity .15s}
+  .live{font-family:"Public Sans",sans-serif;font-size:11px;color:var(--green);background:#e7f3ec;padding:2px 8px;border-radius:20px;font-weight:500}
+  /* tabs: 原题 / 变种器 */
+  .tabbar{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:20px 0 22px}
+  .tab{border:1px solid transparent;border-bottom:none;border-radius:10px 10px 0 0;background:transparent;color:var(--ink2);padding:9px 22px;font-size:14.5px;margin-bottom:-1px}
+  .tab:hover{background:var(--paper2);color:var(--ink)}
+  .tab.active{background:var(--paper2);border-color:var(--line);border-bottom-color:var(--paper2);color:var(--ink);font-weight:500}
+  .answer .ahead{font-family:"Newsreader",serif;font-weight:600;font-size:15px;color:var(--green);margin:16px 0 4px}
+  #origAns .legend span{display:inline-flex;align-items:center}
+
+  /* ===== 打印 / 导出 PDF 专用样式 ===== */
+  @media print{
+    /* 关键：默认浏览器打印会丢掉背景色，强制按设计配色输出 */
+    *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    @page{ size:A4 portrait; margin:14mm; }
+    html,body{ background:#fff !important; }
+    body{ background-image:none !important; font-size:12pt; }
+    .wrap{ max-width:none; margin:0; padding:0; }
+    /* 隐藏所有交互件与屏幕用说明 */
+    .tabbar,.toolbar,.params,button,.status,.live,.derived,header .sub,header .hr,.foot{ display:none !important; }
+    h1{ font-size:18pt; margin:0 0 8px }
+    /* 卡片：去阴影、留边、整块不跨页 */
+    .card{ box-shadow:none; border:1px solid var(--line2); break-inside:avoid; page-break-inside:avoid; margin-bottom:10px; padding:10px 12px }
+    .card h2{ font-size:13pt } .card h2 .tag{ display:none }
+    /* 图、表、答案块不被分页切断 */
+    table,svg,canvas,.panes,.ans2blk,.answer,.qtext{ break-inside:avoid; page-break-inside:avoid }
+    /* 纸上双栏改单栏，图更大更清晰 */
+    .panes{ grid-template-columns:1fr; gap:10px }
+    svg,canvas{ max-width:460px }
+    /* 答案区按屏幕当前状态打印：展开则印出、折叠则不印 */
+    .answer.hidden{ display:none !important }
+    a[href]:after{ content:"" }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>动点函数探究题</h1>
+    <p class="sub"><b>原题</b>：忠实还原试卷的题面、实测数据表、附图、第(2)问坐标网格与参考答案。<b>变种器</b>：调 5 个长度参数即时生成合法变种，数据表、函数图象、第(3)问等腰解与题面全部重算。</p>
+    <div class="hr"></div>
+  </header>
+
+  <div class="tabbar">
+    <button class="tab" data-view="original">原题</button>
+    <button class="tab" data-view="variant">变种器</button>
+    <button class="printbtn" id="btnPrint" style="margin-left:auto" title="打印当前视图 / 导出 PDF">🖨 打印</button>
+  </div>
+
+  <div id="viewOriginal">
+    <div class="card">
+      <h2>题目 <span class="tag">忠实还原 · 北京中考真题改编</span></h2>
+      <div class="qtext">
+        <p class="step"><b>6、</b>如图，P 是 △ABC 外部的一定点，D 是线段 BC 上一动点，连接 PD 交 AC 于点 E。</p>
+        <p class="step">小明根据学习函数的经验，对线段 PD，PE，CD 的长度之间的关系进行了探究，下面是小明的探究过程，请补充完整：</p>
+        <p class="step">（1）对于点 D 在 BC 上的不同位置，画图、测量，得到了线段 PD，PE，CD 的长度的几组值，如下表：</p>
+      </div>
+      <div style="overflow-x:auto;margin:10px 0"><table id="origTbl"></table></div>
+      <div class="qtext">
+        <p class="step">在 PD，PE，CD 的长度这三个量中，确定 <span class="blank">　</span> 的长度是自变量，<span class="blank">　</span> 的长度和 <span class="blank">　</span> 的长度都是这个自变量的函数；</p>
+        <p class="step">（2）在同一平面直角坐标系 <em>xOy</em> 中，画出（1）中所确定的两个函数的图象；</p>
+        <p class="step">（3）结合函数图象，解决问题：连接 CP，当 △PCD 为等腰三角形时，CD 的长度约为 <span class="blank">　</span> cm（精确到 0.01）。</p>
+      </div>
+    </div>
+
+    <div class="panes" style="margin-top:16px">
+      <div class="card">
+        <h2>附图 <span class="tag">原题几何图</span></h2>
+        <svg id="origGeo" viewBox="0 0 500 400" class="pane-svg" aria-label="原题附图：△ABC 与外部定点 P"></svg>
+      </div>
+      <div class="card">
+        <h2>第(2)问坐标网格 <span class="tag">7×7 cm · 供作图</span></h2>
+        <svg id="origGrid" viewBox="0 0 376 370" class="pane-svg" aria-label="空白坐标网格"></svg>
+      </div>
+    </div>
+
+    <div class="card problemcard" style="margin-top:16px">
+      <h2>参考答案 <span class="tag"><button id="btnOrigAns">显示参考答案</button></span></h2>
+      <div class="answer hidden" id="origAns"></div>
+    </div>
+  </div>
+
+  <div id="viewVariant">
+
+  <div class="params">
+    <h3>可调参数：5 个长度 <span class="pill">单位 cm · 自由度 = 5</span></h3>
+    <div class="sliders" id="sliders"></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="btnReset">还原原题</button>
+    <button class="accent" id="btnRand">随机生成合法变种</button>
+    <div class="grp"><label>预设</label>
+      <select id="preset">
+        <option value="orig">原题</option>
+        <option value="obtuse">钝角三角形</option>
+        <option value="eqlat">近似等边</option>
+        <option value="farp">P 更远</option>
+        <option value="flat">扁三角形</option>
+      </select></div>
+    <div class="grp"><label>位置数 N</label><input type="range" id="nPos" min="5" max="12" value="9"><span class="val" id="nPosVal">9</span></div>
+    <div class="grp"><label>高亮位置</label><input type="range" id="hl" min="0" max="8" value="5"><span class="val" id="hlVal">6</span></div>
+    <label class="chk"><input type="checkbox" id="aux" checked> 第(3)问辅助线</label>
+  </div>
+
+  <div class="card" style="max-width:560px;margin:0 auto">
+    <h2>几何图（题目附图，真实比例）<span class="tag" id="geoTag"></span></h2>
+    <svg id="geo" viewBox="0 0 500 400" class="pane-svg" aria-label="由 5 个长度参数确定的三角形 ABC 与定点 P"></svg>
+    <div class="status" id="status"></div>
+    <div class="derived" id="derived"></div>
+  </div>
+
+  <div class="card tablecard">
+    <h2>测量数据表 <span class="live">随参数实时更新 ●</span></h2>
+    <div style="overflow-x:auto"><table id="tbl"></table></div>
+  </div>
+
+  <div class="card problemcard">
+    <h2>自动生成的题目 <span class="tag"><button id="btnAns">显示完整解答</button></span></h2>
+    <div class="qtext" id="qtext"></div>
+
+    <div class="answer hidden" id="answer">
+      <div id="ans1"></div>
+      <div class="ans2blk">
+        <div id="ans2head"></div>
+        <div class="legend" style="margin:8px 2px 6px">
+          <span><span class="dotL" style="background:var(--blue)"></span><b>y₁ = PD</b></span>
+          <span><span class="dotL" style="background:var(--coral)"></span><b>y₂ = PE</b></span>
+          <span id="auxLeg" style="color:var(--ink2)">虚线：y=x、y=PC；绿点：等腰解</span>
+        </div>
+        <canvas id="plot" width="500" height="400" style="max-width:520px;border:1px solid var(--line);background:#fcfaf4"></canvas>
+        <div id="ans2note" class="stepnote"></div>
+      </div>
+      <div id="ans3"></div>
+      <div id="ansSteps"></div>
+    </div>
+  </div>
+
+  <p class="foot">
+    构形：由 <code>AB,BC,CA</code> 以 SSS 定出 △ABC（取 C 为原点、B 在 x 轴正向、A 在上半平面）；再由 <code>PA,PC</code> 求两圆交点，取 AC 外侧（与 B 异侧）的那个即得 P。D 沿 BC 均匀取 N 个位置，<code>CD=t·BC</code> 为自变量，<code>PD=|P−D|</code>，E 为直线 PD 与 AC 的交点，<code>PE=|P−E|</code>。第(3)问 PC 为定值，△PCD 等腰按 <code>PC=PD</code>、<code>PC=CD</code>、<code>CD=PD</code> 三类数值求解（精确到 0.01）。参数须满足 △ABC 与 △PAC 两个三角形不等式，否则给出提示。
+  </p>
+  </div><!-- /viewVariant -->
+</div>
+
+<script>
+/* ---------- vector helpers ---------- */
+const sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y});
+const add=(a,b)=>({x:a.x+b.x,y:a.y+b.y});
+const mul=(a,k)=>({x:a.x*k,y:a.y*k});
+const len=a=>Math.hypot(a.x,a.y);
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const cross=(a,b)=>a.x*b.y-a.y*b.x;
+const sideAC=(A,C,X)=>cross(sub(C,A),sub(X,A));
+function lineIntersect(P,D,A,C){
+  const d1=sub(D,P), d2=sub(C,A), b=sub(A,P);
+  const det=d1.x*(-d2.y)-(-d2.x)*d1.y;
+  if(Math.abs(det)<1e-9) return {E:{...C},s:0,u:0};
+  const s=(b.x*(-d2.y)-(-d2.x)*b.y)/det;
+  const u=(d1.x*b.y-b.x*d1.y)/det;
+  return {E:add(P,mul(d1,s)),s,u};
+}
+
+/* ---------- build coordinates from the 5 lengths ---------- */
+function buildConfig(L){
+  const {AB,BC,CA,PA,PC}=L;
+  const tri=(p,q,r)=>p+q>r+1e-6&&p+r>q+1e-6&&q+r>p+1e-6;
+  if(!tri(AB,BC,CA)) return {err:'△ABC 三边不满足三角形不等式（任意两边之和 > 第三边）。'};
+  if(!tri(PA,PC,CA)) return {err:'△PAC 不成立：需 |PA − PC| < AC < PA + PC，请调整 PA / PC / CA。'};
+  const C={x:0,y:0}, B={x:BC,y:0};
+  const Ax=(CA*CA+BC*BC-AB*AB)/(2*BC);
+  const Ay=Math.sqrt(Math.max(0,CA*CA-Ax*Ax));
+  const A={x:Ax,y:Ay};
+  const u=mul(A,1/CA);
+  const p=(PC*PC-PA*PA+CA*CA)/(2*CA);
+  const h=Math.sqrt(Math.max(0,PC*PC-p*p));
+  const n={x:-u.y,y:u.x};
+  let P=add(add(C,mul(u,p)),mul(n,h));
+  if(sideAC(A,C,P)*sideAC(A,C,B)>=0) P=add(add(C,mul(u,p)),mul(n,-h));
+  return {A,B,C,P};
+}
+
+/* ---------- parameter definitions & presets ---------- */
+const PARAMS=[
+  {k:'AB',lab:'AB',note:'边'}, {k:'BC',lab:'BC',note:'边'}, {k:'CA',lab:'CA',note:'边'},
+  {k:'PA',lab:'PA',note:'P→A'}, {k:'PC',lab:'PC',note:'P→C'}
+];
+const PRESETS={
+  orig:  {AB:3.69,BC:6.00,CA:4.50,PA:2.66,PC:2.56},
+  obtuse:{AB:5.0,BC:7.0,CA:3.0,PA:2.5,PC:3.0},
+  eqlat: {AB:6.0,BC:6.0,CA:6.0,PA:3.5,PC:3.5},
+  farp:  {AB:3.7,BC:6.0,CA:4.5,PA:4.0,PC:4.0},
+  flat:  {AB:4.2,BC:7.0,CA:4.0,PA:3.0,PC:3.0}
+};
+let L={...PRESETS.orig};
+let S=buildConfig(L);
+let N=9, HL=5, showAux=true;
+
+/* ---------- core computation ---------- */
+function compute(){
+  const BC=dist(S.B,S.C), PC=dist(S.P,S.C), CA=dist(S.A,S.C); const rows=[];
+  for(let i=0;i<N;i++){ const t=(N===1)?0:i/(N-1);
+    const D=add(S.C,mul(sub(S.B,S.C),t)); const CD=t*BC; const PD=dist(S.P,D);
+    const {E}=lineIntersect(S.P,D,S.A,S.C); const PE=dist(S.P,E);
+    const onSeg = (()=>{const par=((E.x)*(S.A.x)+(E.y)*(S.A.y))/(CA*CA||1); return par>=-0.01&&par<=1.01;})();
+    rows.push({i,t,CD,D,PD,E,PE,onSeg}); }
+  return {BC,PC,CA,rows};
+}
+function PDof(x,BC){ const D=add(S.C,mul(sub(S.B,S.C),BC?x/BC:0)); return dist(S.P,D); }
+
+function solveIso(){
+  const BC=dist(S.B,S.C), PC=dist(S.P,S.C); const out=[];
+  const findRoots=(g,skipX)=>{ const Nn=4000,res=[]; let xp=0,fp=g(0),last=fp>0?1:fp<0?-1:0;
+    for(let k=1;k<=Nn;k++){ const x=BC*k/Nn, f=g(x); const s=f>0?1:f<0?-1:0;
+      if(s!==0&&last!==0&&s!==last&&x>skipX) res.push(xp-fp*(x-xp)/(f-fp));
+      if(s!==0)last=s; xp=x; fp=f; } return res; };
+  findRoots(x=>PDof(x,BC)-PC, Math.max(0.12,0.03*BC)).forEach(x=>out.push({type:'PC = PD',x}));
+  if(PC>0.05 && PC<BC-0.001) out.push({type:'PC = CD',x:PC});
+  findRoots(x=>x-PDof(x,BC), 0.05).forEach(x=>out.push({type:'CD = PD',x}));
+  const seen=new Set(),res=[],xmax=Math.round(BC*100)/100;
+  for(const o of out){ const r=Math.round(o.x*100)/100; const key=o.type+'@'+r;
+    if(!seen.has(key)&&r>0&&r<=xmax){ seen.add(key); res.push({type:o.type,x:r}); } }
+  return res.sort((a,b)=>a.x-b.x);
+}
+
+/* ---------- geometry render (auto-fit, true proportions) ---------- */
+const geo=document.getElementById('geo'), SVGNS='http://www.w3.org/2000/svg';
+const el=(t,a)=>{const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+function fitFn(){
+  const pts=[S.A,S.B,S.C,S.P];
+  let mnx=Math.min(...pts.map(p=>p.x)), mxx=Math.max(...pts.map(p=>p.x));
+  let mny=Math.min(...pts.map(p=>p.y)), mxy=Math.max(...pts.map(p=>p.y));
+  const w=(mxx-mnx)||1, h=(mxy-mny)||1, cx=(mnx+mxx)/2, cy=(mny+mxy)/2;
+  const sc=Math.min(500/(w*1.28), 400/(h*1.28));
+  return p=>({x:250+(p.x-cx)*sc, y:200-(p.y-cy)*sc});
+}
+function txt(x,y,s,fill,fs){const t=el('text',{x,y,fill,'font-size':fs||14,'font-family':'JetBrains Mono, monospace'});t.textContent=s;return t;}
+function renderGeo(data){
+  geo.innerHTML='';
+  if(S.err){ geo.appendChild(txt(40,200,'参数无效，见下方提示','#bf4a22',14)); return; }
+  const T=fitFn();
+  const a=T(S.A),b=T(S.B),c=T(S.C),p=T(S.P);
+  geo.appendChild(el('polygon',{points:`${a.x},${a.y} ${b.x},${b.y} ${c.x},${c.y}`,fill:'rgba(26,95,163,.05)',stroke:'#1d2630','stroke-width':2,'stroke-linejoin':'round'}));
+  data.rows.forEach(r=>{const d=T(r.D); geo.appendChild(el('circle',{cx:d.x,cy:d.y,r:2.4,fill:'#b9b09a'}));});
+  geo.appendChild(el('line',{x1:c.x,y1:c.y,x2:p.x,y2:p.y,stroke:'#8a93a0','stroke-width':1.4,'stroke-dasharray':'5 4'}));
+  const r=data.rows[Math.min(HL,data.rows.length-1)];
+  if(r){ const d=T(r.D), e=T(r.E);
+    geo.appendChild(el('line',{x1:p.x,y1:p.y,x2:d.x,y2:d.y,stroke:'#1a5fa3','stroke-width':2.3}));
+    geo.appendChild(el('circle',{cx:e.x,cy:e.y,r:4,fill:'#1a5fa3'}));
+    geo.appendChild(txt(e.x+8,e.y-6,'E','#1a5fa3'));
+    geo.appendChild(el('circle',{cx:d.x,cy:d.y,r:4.5,fill:'#1d2630'}));
+    geo.appendChild(txt(d.x-4,d.y+18,'D','#1d2630'));
+    geo.appendChild(txt((p.x+d.x)/2+6,(p.y+d.y)/2,'PD='+r.PD.toFixed(2),'#1a5fa3',11.5));
+  }
+  geo.appendChild(txt((c.x+p.x)/2-58,(c.y+p.y)/2+2,'PC='+data.PC.toFixed(2),'#8a93a0',11.5));
+  const mk=(P,name,color,dx,dy)=>{const s=T(P);
+    geo.appendChild(el('circle',{cx:s.x,cy:s.y,r:5.5,fill:'#fff',stroke:color,'stroke-width':2}));
+    geo.appendChild(el('circle',{cx:s.x,cy:s.y,r:2.6,fill:color}));
+    const t=el('text',{x:s.x+dx,y:s.y+dy,fill:color,'font-size':15,'font-weight':600,'font-family':'Newsreader, serif'});t.textContent=name;geo.appendChild(t);};
+  mk(S.A,'A','#bf4a22',10,-8); mk(S.B,'B','#1d2630',10,-8);
+  mk(S.C,'C','#1d2630',-22,-8); mk(S.P,'P','#1a5fa3',-22,16);
+}
+
+/* ---------- plot render ---------- */
+const cv=document.getElementById('plot'), ctx=cv.getContext('2d');
+function renderPlot(data){
+  const W=cv.width,H=cv.height; ctx.clearRect(0,0,W,H);
+  if(S.err) return;
+  const padL=46,padR=14,padT=14,padB=34; const BC=data.BC;
+  let ymax=0; data.rows.forEach(r=>{ymax=Math.max(ymax,r.PD,r.PE);});
+  ymax=Math.max(ymax,BC)*1.08+0.001; const xmax=BC*1.04+0.001;
+  const X=x=>padL+(x/xmax)*(W-padL-padR), Y=y=>H-padB-(y/ymax)*(H-padT-padB);
+  ctx.strokeStyle='#e4dcc9'; ctx.lineWidth=1; ctx.fillStyle='#7d8794'; ctx.font='11px "JetBrains Mono", monospace';
+  const xs=niceStep(xmax), ysn=niceStep(ymax); ctx.textAlign='center';
+  for(let gx=0;gx<=xmax+1e-6;gx+=xs){const sx=X(gx);ctx.beginPath();ctx.moveTo(sx,padT);ctx.lineTo(sx,H-padB);ctx.stroke();ctx.fillText(gx.toFixed(xs<1?1:0),sx,H-padB+14);}
+  ctx.textAlign='right';
+  for(let gy=0;gy<=ymax+1e-6;gy+=ysn){const sy=Y(gy);ctx.beginPath();ctx.moveTo(padL,sy);ctx.lineTo(W-padR,sy);ctx.stroke();ctx.fillText(gy.toFixed(ysn<1?1:0),padL-6,sy+4);}
+  ctx.fillStyle='#5b6470'; ctx.textAlign='center'; ctx.fillText('CD / cm',(padL+W-padR)/2,H-4);
+  ctx.save();ctx.translate(13,(padT+H-padB)/2);ctx.rotate(-Math.PI/2);ctx.fillText('长度 / cm',0,0);ctx.restore();
+  if(showAux){ ctx.setLineDash([5,4]); ctx.lineWidth=1.4; ctx.strokeStyle='#9aa3af';
+    ctx.beginPath();ctx.moveTo(X(0),Y(data.PC));ctx.lineTo(X(xmax),Y(data.PC));ctx.stroke();
+    const xe=Math.min(xmax,ymax); ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(xe),Y(xe));ctx.stroke(); ctx.setLineDash([]); }
+  const curve=(fn,color)=>{ctx.strokeStyle=color;ctx.lineWidth=2.4;ctx.beginPath();
+    for(let k=0;k<=160;k++){const x=xmax*k/160,y=fn(x),sx=X(x),sy=Y(y);k?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy);}ctx.stroke();};
+  curve(x=>PDof(Math.min(x,BC),BC),'#1a5fa3');
+  curve(x=>{const t=BC?Math.min(x,BC)/BC:0;const D=add(S.C,mul(sub(S.B,S.C),t));const {E}=lineIntersect(S.P,D,S.A,S.C);return dist(S.P,E);},'#bf4a22');
+  data.rows.forEach(r=>{dot(X(r.CD),Y(r.PD),'#1a5fa3');dot(X(r.CD),Y(r.PE),'#bf4a22');});
+  if(showAux){ solveIso().forEach(o=>{const sx=X(o.x);
+    ctx.strokeStyle='#1f7a52';ctx.setLineDash([2,3]);ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(sx,padT);ctx.lineTo(sx,H-padB);ctx.stroke();ctx.setLineDash([]);
+    const yv=o.type==='CD = PD'?o.x:(o.type==='PC = PD'?data.PC:PDof(Math.min(o.x,BC),BC));
+    ctx.fillStyle='#1f7a52';ctx.beginPath();ctx.arc(sx,Y(yv),5,0,7);ctx.fill();});}
+  function dot(x,y,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,3.6,0,7);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();}
+}
+function niceStep(m){const raw=m/6,p=Math.pow(10,Math.floor(Math.log10(raw))),n=raw/p;let s;if(n<1.5)s=1;else if(n<3)s=2;else if(n<7)s=5;else s=10;return s*p;}
+
+/* ---------- table / problem ---------- */
+function renderTable(data){
+  const t=document.getElementById('tbl');
+  let h='<thead><tr><th>位置</th>'; data.rows.forEach((r,i)=>h+=`<th class="${i===HL?'hl':''}">${i+1}</th>`); h+='</tr></thead><tbody>';
+  const row=(nm,key)=>{let s=`<tr><th>${nm}/cm</th>`;data.rows.forEach((r,i)=>s+=`<td class="${i===HL?'hl':''}">${r[key].toFixed(2)}</td>`);return s+'</tr>';};
+  h+=row('PD','PD')+row('PE','PE')+row('CD','CD')+'</tbody>'; t.innerHTML=h;
+}
+function renderProblem(data){
+  document.getElementById('qtext').innerHTML=`
+    <p class="step">如图，P 是 △ABC 外部的一定点，D 是线段 BC 上一动点，连接 PD 交 AC 于点 E。小明对 PD、PE、CD 的长度关系进行了探究。</p>
+    <p class="step">（1）测量得到上表 ${data.rows.length} 组数据。在 PD、PE、CD 中，确定 <span class="blank">　</span> 的长度是自变量，<span class="blank">　</span> 与 <span class="blank">　</span> 的长度都是它的函数。</p>
+    <p class="step">（2）在同一平面直角坐标系中，画出（1）中所确定的两个函数的图象。</p>
+    <p class="step">（3）连接 CP，当 △PCD 为等腰三角形时，CD 的长约为 <span class="blank">　</span> cm（精确到 0.01）。</p>`;
+}
+function renderAnswer(data){
+  const sols=solveIso();
+  const g={'PC = PD':[], 'PC = CD':[], 'CD = PD':[]};
+  sols.forEach(o=>{ (g[o.type]=g[o.type]||[]).push(o.x); });
+  const fmt=arr=>arr.map(v=>v.toFixed(2)).join('、');
+  const BC=data.BC, PC=data.PC;
+  // (1)
+  document.getElementById('ans1').innerHTML=
+    `<div class="ahead">（1）答案与思路</div>
+     <p>自变量是 <b>CD</b>；<b>PD</b> 与 <b>PE</b> 都是 CD 的函数。</p>
+     <p class="stepnote">思路：表中 CD 随 D 由 C 向 B 移动而单调增大、与各位置一一对应；而每给定一个 CD，PD 与 PE 的值都被唯一确定。故取 CD 为自变量，PD、PE 都是它的函数。</p>`;
+  // (2) graph head + note (PD minimum)
+  let cdmin=0,pdmin=1e9;
+  for(let k=0;k<=400;k++){ const x=BC*k/400, v=PDof(x,BC); if(v<pdmin){pdmin=v;cdmin=x;} }
+  document.getElementById('ans2head').innerHTML=
+    `<div class="ahead">（2）答案：两个函数的图象</div>
+     <p>以 CD 为横轴、长度为纵轴，描出各 (CD, PD) 与 (CD, PE) 点并光滑连线（圆点为测量值，曲线为连线）：</p>`;
+  document.getElementById('ans2note').innerHTML=
+    `思路：PD 先减小后增大，最低点约在 CD≈${cdmin.toFixed(2)} 处（PD≈${pdmin.toFixed(2)}）；PE 先快速减小后趋于平缓。`;
+  // (3) answer + detailed steps
+  const allx = sols.length ? sols.map(o=>o.x.toFixed(2)).join(' 或 ') : '—';
+  document.getElementById('ans3').innerHTML=
+    `<div class="ahead">（3）答案：CD ≈ ${sols.length? allx+' cm':'当前配置下无解'}</div>`;
+  const cases=[];
+  if(g['PC = PD'].length) cases.push(`① 当 PC = PD 时：在图象上作水平线 y = ${PC.toFixed(2)}，它与 PD 曲线（除 CD=0 外）的交点横坐标即为所求，得 CD ≈ <b>${fmt(g['PC = PD'])}</b>。`);
+  if(g['PC = CD'].length) cases.push(`② 当 PC = CD 时：即 CD = PC，得 CD ≈ <b>${fmt(g['PC = CD'])}</b>。`);
+  if(g['CD = PD'].length) cases.push(`③ 当 CD = PD 时：作直线 y = x，它与 PD 曲线的交点横坐标即为所求，得 CD ≈ <b>${fmt(g['CD = PD'])}</b>。`);
+  document.getElementById('ansSteps').innerHTML=
+    `<div class="ahead">详细解题步骤（第 3 问）</div>
+     <p>第一步（求定值 PC）：当 D 与 C 重合（CD = 0）时，D = C，于是 PD = PC。由表格首列（或图象与 y 轴交点）读出 <b>PC = ${PC.toFixed(2)} cm</b>，它是定值（P、C 都固定）。</p>
+     <p>第二步（分类讨论）：△PCD 的三条边为 PC、PD、CD。"等腰"即其中两条边相等，按相等的两边分三类：</p>
+     ${cases.length? '<p class="caseline">'+cases.join('</p><p class="caseline">')+'</p>' : '<p class="caseline">在当前参数下三类都无满足条件的解。</p>'}
+     <p>第三步（作答）：综上，当 △PCD 为等腰三角形时，<b>CD ≈ ${sols.length? allx : '—'} cm</b>（精确到 0.01）。</p>
+     <p class="stepnote">要点：每一类都对应图象上的一次"相交"——水平线 y = PC、竖直定位 CD = PC、直线 y = x——读交点横坐标即得；三类要逐一检查，避免漏解。</p>`;
+}
+
+/* ---------- sliders ui ---------- */
+function buildSliders(){
+  const box=document.getElementById('sliders'); box.innerHTML='';
+  PARAMS.forEach(P=>{
+    const wrap=document.createElement('div'); wrap.className='pslab';
+    wrap.innerHTML=`<span class="nm">${P.lab} <em>${P.note}</em></span>
+      <input type="range" min="1" max="9" step="0.01" value="${L[P.k]}" data-k="${P.k}">
+      <span class="num" id="num_${P.k}">${L[P.k].toFixed(2)}</span>`;
+    box.appendChild(wrap);
+    wrap.querySelector('input').addEventListener('input',e=>{
+      L[e.target.dataset.k]=+e.target.value; document.getElementById('num_'+e.target.dataset.k).textContent=(+e.target.value).toFixed(2);
+      document.getElementById('preset').value=''; rebuild();
+    });
+  });
+}
+function syncSliders(){ PARAMS.forEach(P=>{
+  const inp=document.querySelector(`input[data-k="${P.k}"]`); if(inp){inp.value=L[P.k];}
+  const n=document.getElementById('num_'+P.k); if(n)n.textContent=L[P.k].toFixed(2);
+});}
+
+/* ---------- refresh ---------- */
+function rebuild(){ S=buildConfig(L); refresh(); }
+function refresh(){
+  N=+document.getElementById('nPos').value; document.getElementById('nPosVal').textContent=N;
+  const hlEl=document.getElementById('hl'); hlEl.max=N-1; if(HL>N-1)HL=N-1; hlEl.value=HL; document.getElementById('hlVal').textContent=HL+1;
+  showAux=document.getElementById('aux').checked; document.getElementById('auxLeg').style.display=showAux?'inline':'none';
+  const st=document.getElementById('status'), dv=document.getElementById('derived'), tag=document.getElementById('geoTag');
+  const tcard=document.querySelector('.tablecard'), pcard=document.querySelector('.problemcard');
+  if(S.err){ // invalid params: keep last valid table/figure, just dim + warn (no blank flicker)
+    st.textContent=S.err; st.className='status warn';
+    tcard.classList.add('dim'); pcard.classList.add('dim'); return; }
+  tcard.classList.remove('dim'); pcard.classList.remove('dim');
+  const data=compute();
+  // table & problem are rendered FIRST and each guarded, so a drawing error
+  // can never stop the data table from updating.
+  try{ renderTable(data); }catch(e){ console.error('table',e); }
+  try{ renderProblem(data); }catch(e){ console.error('problem',e); }
+  try{ renderAnswer(data); }catch(e){ console.error('answer',e); }
+  try{ renderGeo(data); }catch(e){ console.error('geo',e); }
+  try{ renderPlot(data); }catch(e){ console.error('plot',e); }
+  tcard.classList.remove('flash'); void tcard.offsetWidth; tcard.classList.add('flash'); // brief "updated" pulse
+  const offSeg=data.rows.filter(r=>!r.onSeg && r.CD>1e-6).length;
+  if(offSeg>0){ st.textContent=`提示：有 ${offSeg} 个位置的 E 落在线段 AC 之外（PD 交在 AC 延长线上）。可增大 CA 让 E 落在 AC 上。`; st.className='status warn'; }
+  else { st.textContent='配置合法：P 在 AC 外侧，所有 E 都落在线段 AC 上。'; st.className='status ok'; }
+  const PB=dist(S.P,S.B);
+  const angC=Math.acos(Math.max(-1,Math.min(1,(data.CA*data.CA+data.BC*data.BC-dist(S.A,S.B)**2)/(2*data.CA*data.BC))))*180/Math.PI;
+  dv.textContent=`派生量：PB=${PB.toFixed(2)}  ∠C=${angC.toFixed(1)}°  （PB 不是独立参数）`;
+  tag.textContent='BC='+data.BC.toFixed(2)+'  PC='+data.PC.toFixed(2);
+}
+
+/* ---------- random valid variant ---------- */
+const rnd=(a,b)=>Math.round((a+Math.random()*(b-a))*10)/10;
+function randVariant(){
+  for(let i=0;i<500;i++){
+    const BC=rnd(4.5,7.5), CA=rnd(3,5.5);
+    const AB=rnd(Math.abs(BC-CA)+0.8, BC+CA-0.8);
+    const PC=rnd(2,4.2), PA=rnd(Math.abs(CA-PC)+0.5, CA+PC-0.5);
+    const cand={AB,BC,CA,PA,PC}; const g=buildConfig(cand); if(g.err) continue;
+    const area=Math.abs(cross(sub(g.B,g.A),sub(g.C,g.A)))/2; if(area<2) continue;
+    // require most E on segment AC
+    Stmp=g;
+    L=cand; S=g; document.getElementById('preset').value='';
+    let off=0; for(let k=1;k<9;k++){const t=k/8;const D=add(g.C,mul(sub(g.B,g.C),t));const {E}=lineIntersect(g.P,D,g.A,g.C);const par=(E.x*g.A.x+E.y*g.A.y)/(CA*CA);if(par>1.02)off++;}
+    if(off>2) continue;
+    syncSliders(); refresh(); return;
+  }
+}
+
+/* ---------- events ---------- */
+document.getElementById('btnReset').onclick=()=>{L={...PRESETS.orig};document.getElementById('preset').value='orig';syncSliders();rebuild();};
+document.getElementById('btnRand').onclick=randVariant;
+document.getElementById('preset').onchange=e=>{const k=e.target.value;if(PRESETS[k]){L={...PRESETS[k]};syncSliders();rebuild();}};
+document.getElementById('nPos').oninput=()=>{HL=Math.min(HL,(+document.getElementById('nPos').value)-1);refresh();};
+document.getElementById('hl').oninput=e=>{HL=+e.target.value;refresh();};
+document.getElementById('aux').onchange=refresh;
+document.getElementById('btnAns').onclick=()=>{const a=document.getElementById('answer');a.classList.toggle('hidden');document.getElementById('btnAns').textContent=a.classList.contains('hidden')?'显示完整解答':'隐藏解答';};
+
+buildSliders(); rebuild();
+
+/* ============ 原题（静态忠实还原） ============ */
+// 试卷原始实测数据：9 个【非均匀】位置，硬编码，不经反演/重算。
+const ORIG={
+  PD:[2.56,2.43,2.38,2.43,2.67,3.16,3.54,4.45,5.61],
+  PE:[2.56,2.01,1.67,1.47,1.34,1.32,1.34,1.40,1.48],
+  CD:[0.00,0.45,0.93,1.40,2.11,3.00,3.54,4.68,6.00]
+};
+function renderOrigTable(){
+  let h='<thead><tr><th>位置</th>';
+  ORIG.CD.forEach((_,i)=>h+=`<th>${i+1}</th>`); h+='</tr></thead><tbody>';
+  const row=(nm,key)=>{let s=`<tr><th>${nm}/cm</th>`;ORIG[key].forEach(v=>s+=`<td>${v.toFixed(2)}</td>`);return s+'</tr>';};
+  h+=row('PD','PD')+row('PE','PE')+row('CD','CD')+'</tbody>';
+  document.getElementById('origTbl').innerHTML=h;
+}
+// 7×7 cm 坐标网格；withData=true 时叠加 9 个实测点并连线（作图答案）。
+function renderOrigGrid(svgEl,withData){
+  const units=7,U=46,padL=40,padB=34,padT=14,padR=16;
+  const W=padL+units*U+padR,H=padT+units*U+padB;
+  const X=x=>padL+x*U, Y=y=>padT+(units-y)*U;
+  let s=`<rect x="${padL}" y="${padT}" width="${units*U}" height="${units*U}" fill="#fcfaf4"/>`;
+  for(let g=0;g<=units;g++){
+    s+=`<line x1="${X(g)}" y1="${padT}" x2="${X(g)}" y2="${Y(0)}" stroke="#e4dcc9"/>`;
+    s+=`<line x1="${padL}" y1="${Y(g)}" x2="${X(units)}" y2="${Y(g)}" stroke="#e4dcc9"/>`;
+  }
+  s+=`<line x1="${padL}" y1="${Y(0)}" x2="${X(units)}" y2="${Y(0)}" stroke="#1d2630" stroke-width="1.6"/>`;
+  s+=`<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${Y(0)}" stroke="#1d2630" stroke-width="1.6"/>`;
+  for(let g=1;g<=units;g++){
+    s+=`<text x="${X(g)}" y="${Y(0)+14}" fill="#7d8794" font-size="11" text-anchor="middle" font-family="JetBrains Mono,monospace">${g}</text>`;
+    s+=`<text x="${padL-6}" y="${Y(g)+4}" fill="#7d8794" font-size="11" text-anchor="end" font-family="JetBrains Mono,monospace">${g}</text>`;
+  }
+  s+=`<text x="${X(units)+2}" y="${Y(0)+4}" fill="#5b6470" font-size="11" font-family="JetBrains Mono,monospace">x/cm</text>`;
+  s+=`<text x="${padL+2}" y="${padT-2}" fill="#5b6470" font-size="11" font-family="JetBrains Mono,monospace">y/cm</text>`;
+  s+=`<text x="${padL-11}" y="${Y(0)+14}" fill="#7d8794" font-size="11" text-anchor="middle" font-family="JetBrains Mono,monospace">O</text>`;
+  if(withData){
+    const poly=(key,color)=>`<polyline points="${ORIG.CD.map((cd,i)=>`${X(cd)},${Y(ORIG[key][i])}`).join(' ')}" fill="none" stroke="${color}" stroke-width="2"/>`;
+    s+=poly('PD','#1a5fa3')+poly('PE','#bf4a22');
+    ORIG.CD.forEach((cd,i)=>{
+      s+=`<circle cx="${X(cd)}" cy="${Y(ORIG.PD[i])}" r="3.3" fill="#1a5fa3" stroke="#fff"/>`;
+      s+=`<circle cx="${X(cd)}" cy="${Y(ORIG.PE[i])}" r="3.3" fill="#bf4a22" stroke="#fff"/>`;
+    });
+  }
+  svgEl.setAttribute('viewBox',`0 0 ${W} ${H}`); svgEl.innerHTML=s;
+}
+// 原题附图：用 orig 预设的反演几何，画静态图（标出 D、E 一个代表位置）。
+function renderOrigFigure(){
+  const g=buildConfig(PRESETS.orig); const svg=document.getElementById('origGeo'); svg.innerHTML='';
+  if(g.err) return;
+  const pts=[g.A,g.B,g.C,g.P];
+  const mnx=Math.min(...pts.map(p=>p.x)),mxx=Math.max(...pts.map(p=>p.x));
+  const mny=Math.min(...pts.map(p=>p.y)),mxy=Math.max(...pts.map(p=>p.y));
+  const w=(mxx-mnx)||1,h=(mxy-mny)||1,cx=(mnx+mxx)/2,cy=(mny+mxy)/2;
+  const sc=Math.min(500/(w*1.34),400/(h*1.34));
+  const T=p=>({x:250+(p.x-cx)*sc,y:200-(p.y-cy)*sc});
+  const a=T(g.A),b=T(g.B),c=T(g.C),p=T(g.P);
+  const t=0.62, Dw=add(g.C,mul(sub(g.B,g.C),t)); const {E}=lineIntersect(g.P,Dw,g.A,g.C);
+  const d=T(Dw),e=T(E);
+  const ADD=html=>svg.insertAdjacentHTML('beforeend',html);
+  const lab=(x,y,str,col,dx,dy,fs,serif)=>ADD(`<text x="${x+dx}" y="${y+dy}" fill="${col}" font-size="${fs||15}" font-weight="600" font-family="${serif?'Newsreader,serif':'JetBrains Mono,monospace'}">${str}</text>`);
+  ADD(`<polygon points="${a.x},${a.y} ${b.x},${b.y} ${c.x},${c.y}" fill="rgba(26,95,163,.05)" stroke="#1d2630" stroke-width="2" stroke-linejoin="round"/>`);
+  ADD(`<line x1="${c.x}" y1="${c.y}" x2="${p.x}" y2="${p.y}" stroke="#8a93a0" stroke-width="1.4" stroke-dasharray="5 4"/>`);
+  ADD(`<line x1="${p.x}" y1="${p.y}" x2="${d.x}" y2="${d.y}" stroke="#1a5fa3" stroke-width="2.2"/>`);
+  ADD(`<circle cx="${e.x}" cy="${e.y}" r="4" fill="#1a5fa3"/>`);
+  ADD(`<circle cx="${d.x}" cy="${d.y}" r="4.5" fill="#1d2630"/>`);
+  lab(e.x,e.y,'E','#1a5fa3',8,-6,13); lab(d.x,d.y,'D','#1d2630',-4,18,13);
+  lab((p.x+d.x)/2,(p.y+d.y)/2,'PD','#1a5fa3',6,-2,11.5);
+  lab((c.x+p.x)/2,(c.y+p.y)/2,'PC','#8a93a0',-30,2,11.5);
+  const vtx=(P,name,col,dx,dy)=>{ADD(`<circle cx="${P.x}" cy="${P.y}" r="5.5" fill="#fff" stroke="${col}" stroke-width="2"/><circle cx="${P.x}" cy="${P.y}" r="2.6" fill="${col}"/>`);lab(P.x,P.y,name,col,dx,dy,15,true);};
+  vtx(a,'A','#bf4a22',10,-8); vtx(b,'B','#1d2630',10,-8); vtx(c,'C','#1d2630',-22,-8); vtx(p,'P','#1a5fa3',-22,16);
+}
+function initOriginal(){
+  renderOrigTable(); renderOrigFigure(); renderOrigGrid(document.getElementById('origGrid'),false);
+  document.getElementById('origAns').innerHTML=`
+    <div class="ahead">（1）自变量与函数</div>
+    <p>自变量是 <b>CD</b>；<b>PD</b> 与 <b>PE</b> 都是 CD 的函数。CD 随 D 由 C 向 B 移动单调增大、与各位置一一对应，而每给定一个 CD，PD 与 PE 的值都被唯一确定。</p>
+    <div class="ahead">（2）两个函数的图象</div>
+    <p>以 CD 为横轴、长度为纵轴，描出 9 个 (CD, PD)、(CD, PE) 点并连线：</p>
+    <div style="max-width:360px;margin:6px 0"><svg id="origGridAns" class="pane-svg"></svg></div>
+    <p class="legend" style="margin:6px 2px"><span><span class="dotL" style="background:var(--blue)"></span>y₁ = PD</span><span><span class="dotL" style="background:var(--coral)"></span>y₂ = PE</span></p>
+    <div class="ahead">（3）△PCD 为等腰三角形：CD ≈ 1.78、2.56、3.54 cm</div>
+    <p>当 CD = 0 时 D 与 C 重合，PD = PC，由表格首列读出 <b>PC = 2.56 cm</b>，它是定值（P、C 都固定）。△PCD 的三边为 PC、PD、CD，分三类讨论（表中数据精确到 0.01，故结果尽量保留到 0.01）：</p>
+    <p class="caseline">① PC = PD：即 PD = 2.56。在 PD 表中（除 CD = 0 外），2.56 落在位置 4（CD = 1.40, PD = 2.43）与位置 5（CD = 2.11, PD = 2.67）之间，线性插值得 CD ≈ <b>1.78</b>（此值由两测量点间插值读出，精度最低）。</p>
+    <p class="caseline">② PC = CD：即 CD = PC = <b>2.56</b>（直接等于定值 PC，精确值）。</p>
+    <p class="caseline">③ CD = PD：表中位置 7 恰有 PD = CD = 3.54，故 CD = <b>3.54</b>（精确值）。</p>
+    <p>综上，当 △PCD 为等腰三角形时，<b>CD ≈ 1.78、2.56、3.54 cm</b>。其中 ②③ 由表格数据直接得到（精确到 0.01），① 为测量点间插值的近似。</p>`;
+  renderOrigGrid(document.getElementById('origGridAns'),true);
+  document.getElementById('btnOrigAns').onclick=()=>{const a=document.getElementById('origAns');const hid=a.classList.toggle('hidden');document.getElementById('btnOrigAns').textContent=hid?'显示参考答案':'隐藏参考答案';};
+}
+/* ============ 标签切换 ============ */
+function showView(name){
+  document.getElementById('viewOriginal').style.display=name==='original'?'block':'none';
+  document.getElementById('viewVariant').style.display=name==='variant'?'block':'none';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===name));
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
+document.getElementById('btnPrint').onclick=()=>window.print();
+initOriginal(); showView('original');
+</script>
+</body>
+</html>

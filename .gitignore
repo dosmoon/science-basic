@@ -1,0 +1,11 @@
+# 本地 Claude Code 配置（会话级权限等，不入库）
+.claude/
+
+# 依赖与构建产物
+node_modules/
+dist/
+.astro/
+
+# 系统/编辑器
+.DS_Store
+*.log
