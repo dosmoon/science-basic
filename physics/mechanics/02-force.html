@@ -142,25 +142,65 @@
   <p>阿特伍德的实验表把三列写在一起：moving force（使动物体的力）、quantity of matter moved（被推动的物质的量）、accelerating force（加速的程度）。用今天的符号来读，就是 \(F = ma\)。这是历史上比较明确的一次：用可以重复的实验室手续，去测量「同样的力产生多大的加速度」。</p>
   <div class="formula">\(a = \dfrac{F_{\mathrm{net}}}{m_{1}+m_{2}}\)</div>
   <p>装置里的拉力，仍然来自悬挂物向下坠落的趋势。力和地球的吸引在实验室里暂时拆不开——斜面上的滚球已经遇到过同一困难，阿特伍德只是把测量做得更清楚。我们这一章借用它作为一种可以重复施加的拉力，<strong>并不调用引力定律</strong>。悬挂物为什么会往下坠，以及这股作用为什么恰好跟「多重」成正比，留给第三章。</p>
+  <p>下面这台装置可以自己改两边的砝码，再让它动起来。净力由质量差决定；加速度还要看两边质量的总和。为了算起来整齐，这里取每千克悬挂物向下的拉力 \(u = 10\,\mathrm{N/kg}\)（接近实验室测到的 9.8）。\(u\) 只当作已经测出的值，不解释它从哪里来。</p>
 
-  <figure class="diagram" aria-label="阿特伍德机">
-    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect width="720" height="240" fill="#FBF8F1"/>
-      <circle cx="180" cy="48" r="28" fill="none" stroke="#1d2630" stroke-width="3"/>
-      <line x1="152" y1="48" x2="152" y2="150" stroke="#1d2630" stroke-width="2"/>
-      <line x1="208" y1="48" x2="208" y2="110" stroke="#1d2630" stroke-width="2"/>
-      <rect x="136" y="150" width="32" height="48" fill="#1a5fa3"/>
-      <rect x="194" y="110" width="28" height="28" fill="#bf4a22"/>
-      <text x="152" y="218" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">m₁</text>
-      <text x="208" y="158" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">m₂</text>
-      <text x="400" y="64" font-family="Newsreader, serif" font-size="16" fill="#1d2630">把加速度减小，便于计时</text>
-      <text x="400" y="96" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">净力：两边拉力之差</text>
-      <text x="400" y="116" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">惯性：两边物质的量之和</text>
-      <text x="400" y="148" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">挪骑码：力变，总惯性几乎不变</text>
-      <text x="400" y="168" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">两边同加码：力不变，惯性变</text>
-      <text x="400" y="200" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">拉力仍来自悬挂，引力公式还不用</text>
+  <figure class="panel" id="atwood-lab" aria-label="可调参的阿特伍德机">
+    <h3>动手：阿特伍德机</h3>
+    <div class="ctrl">
+      <label>左边 m₁ <input id="atM1" type="range" min="1" max="12" step="0.1" value="6"> <span class="readout" id="atM1v"></span></label>
+      <label>右边 m₂ <input id="atM2" type="range" min="1" max="12" step="0.1" value="4"> <span class="readout" id="atM2v"></span></label>
+    </div>
+    <div class="ctrl">
+      <button type="button" id="atGo">开始运动</button>
+      <button type="button" class="ghost" id="atReset">复位</button>
+      <button type="button" class="ghost" id="atRider">演示：挪骑码</button>
+      <button type="button" class="ghost" id="atBoth">演示：两边同加码</button>
+    </div>
+    <svg id="atSvg" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="300" fill="#fcfaf4"/>
+      <rect x="72" y="278" width="216" height="12" rx="2" fill="#efe9da" stroke="#1d2630"/>
+      <rect x="94" y="36" width="10" height="242" fill="#efe9da" stroke="#1d2630"/>
+      <rect x="256" y="36" width="10" height="242" fill="#efe9da" stroke="#1d2630"/>
+      <rect x="90" y="28" width="180" height="12" fill="#efe9da" stroke="#1d2630"/>
+      <g fill="#cfc7b4">
+        <rect x="96" y="88" width="6" height="2"/>
+        <rect x="96" y="118" width="6" height="2"/>
+        <rect x="96" y="148" width="6" height="2"/>
+        <rect x="96" y="178" width="6" height="2"/>
+        <rect x="96" y="208" width="6" height="2"/>
+        <rect x="96" y="238" width="6" height="2"/>
+      </g>
+      <text x="84" y="82" text-anchor="end" font-family="Public Sans, sans-serif" font-size="10" fill="#5b6470">路程</text>
+      <circle cx="180" cy="52" r="28" fill="#fff" stroke="#1d2630" stroke-width="3"/>
+      <g id="atWheel" transform="rotate(0 180 52)">
+        <line x1="180" y1="28" x2="180" y2="76" stroke="#1d2630" stroke-width="1.5"/>
+        <line x1="156" y1="52" x2="204" y2="52" stroke="#1d2630" stroke-width="1.5"/>
+        <line x1="163" y1="35" x2="197" y2="69" stroke="#1d2630" stroke-width="1.2"/>
+        <line x1="197" y1="35" x2="163" y2="69" stroke="#1d2630" stroke-width="1.2"/>
+      </g>
+      <circle cx="180" cy="52" r="5" fill="#1d2630"/>
+      <path id="atStr1" d="M152 52 V140" fill="none" stroke="#1d2630" stroke-width="2"/>
+      <path id="atStr2" d="M208 52 V140" fill="none" stroke="#1d2630" stroke-width="2"/>
+      <g id="atPlates1"></g>
+      <g id="atPlates2"></g>
+      <text id="atLab1" x="78" y="200" text-anchor="end" font-family="Public Sans, sans-serif" font-size="13" fill="#1a5fa3">m₁</text>
+      <text id="atLab2" x="282" y="200" text-anchor="start" font-family="Public Sans, sans-serif" font-size="13" fill="#bf4a22">m₂</text>
+      <text x="430" y="48" font-family="Newsreader, serif" font-size="18" fill="#1d2630">两边砝码对吊，加速度变慢</text>
+      <text x="430" y="78" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">净力 = 质量差 × u</text>
+      <text x="430" y="100" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">惯性 = 两边质量之和</text>
+      <text x="430" y="122" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">u = 10 N/kg（测得，先不解释）</text>
+      <text id="atDir" x="430" y="160" font-family="Public Sans, sans-serif" font-size="14" fill="#1a5fa3"></text>
+      <text x="430" y="200" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">挪骑码：力变，总惯性几乎不变</text>
+      <text x="430" y="222" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">两边同加码：力不变，惯性变</text>
+      <text x="430" y="252" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">拉力来自悬挂，引力公式还不用</text>
     </svg>
-    <figcaption><span class="n">图 2-3</span>阿特伍德机补上了伽利略时代缺少的「可控制拉力」实验。它验证的是力与加速度、惯性的关系，不是万有引力。</figcaption>
+    <div class="at-stats">
+      <div>净力 F = (m₁ − m₂) u<b id="atF">—</b></div>
+      <div>总惯性 m₁ + m₂<b id="atM">—</b></div>
+      <div>加速度 a = F / (m₁ + m₂)<b id="atA">—</b></div>
+    </div>
+    <p class="hint" id="atHint"></p>
+    <figcaption><span class="n">图 2-3</span>自己改两边砝码。净力来自质量差，加速度还要除以两边质量之和。点「开始运动」，也可以用第一章的 \(a=2s/t^{2}\) 来复核。</figcaption>
   </figure>
 
   <p>十九世纪课堂里的 Fletcher 小车，以及更晚的气垫导轨，是同一思路的水平装置：挂钩砝码提供可以逐档改变的拉力，小车或滑块提供可以逐档改变的惯性。测量的仍是第一章就会的东西——路程与时间，再算出 \(a\)。控制变量做成两张图：力一定，\(a\) 与 \(m\) 成反比；\(m\) 一定，\(a\) 与 \(F\) 成正比。</p>
@@ -337,6 +377,195 @@ document.addEventListener("DOMContentLoaded", function(){
   ratio.addEventListener("input", paintFma);
   ratio.addEventListener("change", paintFma);
   paintFma();
+
+  var NS = "http://www.w3.org/2000/svg";
+  var U_PULL = 10;
+  var atM1 = document.getElementById("atM1");
+  var atM2 = document.getElementById("atM2");
+  var atM1v = document.getElementById("atM1v");
+  var atM2v = document.getElementById("atM2v");
+  var atGo = document.getElementById("atGo");
+  var atReset = document.getElementById("atReset");
+  var atRider = document.getElementById("atRider");
+  var atBoth = document.getElementById("atBoth");
+  var atStr1 = document.getElementById("atStr1");
+  var atStr2 = document.getElementById("atStr2");
+  var atPlates1 = document.getElementById("atPlates1");
+  var atPlates2 = document.getElementById("atPlates2");
+  var atLab1 = document.getElementById("atLab1");
+  var atLab2 = document.getElementById("atLab2");
+  var atWheel = document.getElementById("atWheel");
+  var atDir = document.getElementById("atDir");
+  var atF = document.getElementById("atF");
+  var atMsum = document.getElementById("atM");
+  var atA = document.getElementById("atA");
+  var atHint = document.getElementById("atHint");
+  var atS = 0, atV = 0, atT = 0, atRun = false, atPrev = 0, atRAF = 0;
+  var riderLeft = true, bothStep = 0;
+  var AT = { x1: 152, x2: 208, axle: 52, r: 28, rest: 138, floor: 276, pxPerM: 72 };
+
+  function atPhys(){
+    var m1 = Number(atM1.value), m2 = Number(atM2.value);
+    var F = (m1 - m2) * U_PULL;
+    var M = m1 + m2;
+    return { m1: m1, m2: m2, F: F, M: M, a: F / M };
+  }
+
+  function atClear(g){
+    while (g.firstChild) g.removeChild(g.firstChild);
+  }
+
+  function atPlateCount(m){
+    return Math.max(2, Math.round(m));
+  }
+
+  function atDrawStack(g, x, yTop, m, color){
+    var n = atPlateCount(m);
+    var ph = 7, gap = 1;
+    var pw = 22 + Math.min(m, 12) * 1.1;
+    atClear(g);
+    for (var i = 0; i < n; i++){
+      var rec = document.createElementNS(NS, "rect");
+      rec.setAttribute("x", String(x - pw / 2));
+      rec.setAttribute("y", String(yTop + i * (ph + gap)));
+      rec.setAttribute("width", String(pw));
+      rec.setAttribute("height", String(ph));
+      rec.setAttribute("rx", "1.5");
+      rec.setAttribute("fill", color);
+      rec.setAttribute("stroke", "#1d2630");
+      rec.setAttribute("stroke-width", "0.9");
+      g.appendChild(rec);
+    }
+    return n * (ph + gap);
+  }
+
+  function atLimits(p){
+    var h1 = atPlateCount(p.m1) * 8;
+    var h2 = atPlateCount(p.m2) * 8;
+    var maxDown1 = (AT.floor - 10 - h1 - AT.rest) / AT.pxPerM;
+    var maxUp1 = (AT.rest - (AT.axle + AT.r + 16)) / AT.pxPerM;
+    var maxDown2 = (AT.floor - 10 - h2 - AT.rest) / AT.pxPerM;
+    var maxUp2 = (AT.rest - (AT.axle + AT.r + 16)) / AT.pxPerM;
+    return {
+      sMax: Math.min(maxDown1, maxUp2, 0.95),
+      sMin: -Math.min(maxDown2, maxUp1, 0.95)
+    };
+  }
+
+  function atStopRun(){
+    atRun = false;
+    atGo.textContent = "开始运动";
+    if (atRAF) cancelAnimationFrame(atRAF);
+    atRAF = 0;
+  }
+
+  function paintAtwood(){
+    var p = atPhys();
+    atM1v.textContent = p.m1.toFixed(1) + " kg";
+    atM2v.textContent = p.m2.toFixed(1) + " kg";
+    var y1 = AT.rest + atS * AT.pxPerM;
+    var y2 = AT.rest - atS * AT.pxPerM;
+    atStr1.setAttribute("d", "M" + AT.x1 + " " + AT.axle + " V" + y1.toFixed(1));
+    atStr2.setAttribute("d", "M" + AT.x2 + " " + AT.axle + " V" + y2.toFixed(1));
+    var h1 = atDrawStack(atPlates1, AT.x1, y1, p.m1, "#1a5fa3");
+    var h2 = atDrawStack(atPlates2, AT.x2, y2, p.m2, "#bf4a22");
+    atLab1.setAttribute("y", String(y1 + Math.min(h1, 40)));
+    atLab2.setAttribute("y", String(y2 + Math.min(h2, 40)));
+    atLab1.textContent = p.m1.toFixed(1) + " kg";
+    atLab2.textContent = p.m2.toFixed(1) + " kg";
+    var deg = (atS / 0.05) * (180 / Math.PI);
+    atWheel.setAttribute("transform", "rotate(" + deg.toFixed(1) + " 180 52)");
+    atF.textContent = p.F.toFixed(1) + " N";
+    atMsum.textContent = p.M.toFixed(1) + " kg";
+    atA.textContent = (Math.abs(p.a) < 1e-9 ? "0" : (p.a >= 0 ? "+" : "−") + Math.abs(p.a).toFixed(2)) + " m/s²";
+    if (Math.abs(p.F) < 1e-9) atDir.textContent = "两边一样重：净力为 0，保持静止。";
+    else if (p.F > 0) atDir.textContent = "左边更重，左边向下加速。";
+    else atDir.textContent = "右边更重，右边向下加速。";
+    if (!atRun){
+      if (Math.abs(p.F) < 1e-9) {
+        atHint.textContent = "两边质量相等。净力为零，加速度为零。这就是第一定律在这台装置上的样子。";
+      } else {
+        atHint.textContent = "F = (" + p.m1.toFixed(1) + " − " + p.m2.toFixed(1) + ") × 10 = " + p.F.toFixed(1) + " N。a = " + p.F.toFixed(1) + " / " + p.M.toFixed(1) + " = " + p.a.toFixed(2) + " m/s²。点「开始运动」看位移，也可用 a = 2s/t² 复核。";
+      }
+    }
+  }
+
+  function atTick(ts){
+    if (!atRun) return;
+    if (!atPrev) atPrev = ts;
+    var dt = Math.min(0.04, (ts - atPrev) / 1000);
+    atPrev = ts;
+    var p = atPhys();
+    var lim = atLimits(p);
+    atV += p.a * dt;
+    atS += atV * dt;
+    atT += dt;
+    var hit = false;
+    if (atS > lim.sMax){ atS = lim.sMax; atV = 0; hit = true; }
+    if (atS < lim.sMin){ atS = lim.sMin; atV = 0; hit = true; }
+    paintAtwood();
+    var sAbs = Math.abs(atS);
+    var aChk = atT > 0.05 ? (2 * sAbs) / (atT * atT) : 0;
+    atHint.textContent = "t = " + atT.toFixed(2) + " s，|s| = " + sAbs.toFixed(2) + " m，|v| = " + Math.abs(atV).toFixed(2) + " m/s。用 a = 2s/t² 得到 " + aChk.toFixed(2) + " m/s²，公式值是 " + Math.abs(p.a).toFixed(2) + " m/s²。";
+    if (hit){
+      atStopRun();
+      atHint.textContent += " 已经走到尽头，点复位再做。";
+      return;
+    }
+    atRAF = requestAnimationFrame(atTick);
+  }
+
+  function atHardReset(){
+    atStopRun();
+    atS = 0; atV = 0; atT = 0; atPrev = 0;
+    paintAtwood();
+  }
+
+  function onMassChange(){
+    atHardReset();
+  }
+
+  atM1.addEventListener("input", onMassChange);
+  atM2.addEventListener("input", onMassChange);
+  atGo.addEventListener("click", function(){
+    var p = atPhys();
+    if (Math.abs(p.a) < 1e-9){
+      atHint.textContent = "两边质量相等，净力为 0，加速度为 0。没有未抵消的力，运动状态不改变。";
+      return;
+    }
+    if (atRun){
+      atStopRun();
+      return;
+    }
+    atRun = true;
+    atGo.textContent = "暂停";
+    atPrev = 0;
+    atRAF = requestAnimationFrame(atTick);
+  });
+  atReset.addEventListener("click", atHardReset);
+  atRider.addEventListener("click", function(){
+    atHardReset();
+    if (riderLeft){ atM1.value = "6"; atM2.value = "5"; }
+    else { atM1.value = "5"; atM2.value = "6"; }
+    riderLeft = !riderLeft;
+    paintAtwood();
+    atHint.textContent = "总质量都是 11 kg。骑码在较重的一边。再点一次，骑码挪到另一边：净力反向，加速度大小不变。";
+  });
+  atBoth.addEventListener("click", function(){
+    atHardReset();
+    if (bothStep === 0){
+      atM1.value = "6"; atM2.value = "4";
+      bothStep = 1;
+      paintAtwood();
+      atHint.textContent = "质量差 2 kg，总质量 10 kg，净力 20 N，a = 2.00 m/s²。再点一次：两边各加 3 kg。";
+    } else {
+      atM1.value = "9"; atM2.value = "7";
+      bothStep = 0;
+      paintAtwood();
+      atHint.textContent = "质量差仍是 2 kg，净力仍是 20 N，总质量变成 16 kg，a = 1.25 m/s²。同一力，惯性变大，加速度变小。";
+    }
+  });
+  paintAtwood();
 });
 </script>
 </body>
