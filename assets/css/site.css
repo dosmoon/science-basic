@@ -82,7 +82,7 @@ code, .unit{
 
 .grid-3{
   max-width:1080px; margin:0 auto; padding:8px 20px 56px;
-  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+  display:grid; grid-template-columns:repeat(2,1fr); gap:16px;
 }
 @media(max-width:820px){.grid-3{grid-template-columns:1fr}}
 .card{
@@ -214,7 +214,11 @@ figcaption .n{
   margin:18px 0 22px; padding:14px 16px 16px;
   background:var(--paper2); border:1px solid var(--line);
   border-radius:14px; box-shadow:var(--shadow);
+  scroll-margin-top:72px;
 }
+.data-table.rules th, .data-table.rules td{text-align:center; font-family:var(--sans);}
+.data-table.rules td:first-child, .data-table.rules th:first-child{text-align:left;}
+.data-table.rules td{font-size:14px;}
 .panel h3{margin:0 0 10px; font-family:var(--serif); font-size:16.5px}
 .panel .ctrl{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; margin-bottom:10px}
 .panel label{font-size:13.5px; color:var(--ink2); display:flex; align-items:center; gap:8px}
@@ -230,6 +234,35 @@ figcaption .n{
 .chapter-nav .muted{color:var(--ink2)}
 
 .katex-display{margin:0.6em 0 !important}
+
+.tape-scroll{overflow-x:auto; padding:20px 4px 10px;}
+.tape{display:flex; justify-content:center; min-width:min-content;}
+.cell{
+  width:38px; min-width:38px; height:46px;
+  border:1px solid var(--line2); border-left:none;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:18px; position:relative;
+}
+.cell:first-child{border-left:1px solid var(--line2);}
+.cell.on{
+  background:var(--blue-soft); border-color:var(--blue);
+  box-shadow:0 0 0 1px var(--blue); z-index:1;
+}
+.cell .arrow{
+  position:absolute; top:-18px; left:50%; transform:translateX(-50%);
+  font-size:11px; color:var(--blue); font-family:var(--sans); white-space:nowrap;
+}
+.tm-bar{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; margin-bottom:8px;}
+.panel select, .panel input[type=text]{
+  font-family:var(--mono); font-size:13px;
+  border:1px solid var(--line2); border-radius:8px;
+  background:#fff; color:var(--ink); padding:5px 8px;
+}
+.panel input[type=text]{width:148px;}
+.data-table tr.now td{background:#fff7e8;}
+.tm-msg{font-size:13.5px; margin:8px 0 0; color:var(--ink2); min-height:1.4em;}
+.tm-msg.halt{color:var(--green);}
+.tm-msg.err{color:var(--coral);}
 
 @media print{
   *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
