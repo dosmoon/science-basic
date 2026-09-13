@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三章 · 引力（待审阅后展开）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body>
+<header class="site-nav">
+  <div class="inner">
+    <a class="brand" href="../../index.html">基础科学 <small>MKS</small></a>
+    <nav>
+      <a href="../../index.html">首页</a>
+      <a href="../index.html" aria-current="page">物理</a>
+      <a href="../../动点函数探究题_生成器.html">数学</a>
+    </nav>
+  </div>
+</header>
+
+<article class="essay">
+  <p class="crumb"><a href="../../index.html">首页</a> / <a href="../index.html">物理</a> / 基础力学</p>
+  <p class="kicker">Mechanics · Chapter 03</p>
+  <header>
+    <h1>引力</h1>
+    <p class="deck">正文还没有写。这一页只把任务钉死，等前两章审阅过后再展开。</p>
+    <div class="hr"></div>
+  </header>
+
+  <p>第二章已经把加速度接到力上：\(a=F/m\)。斜面和自由落体却要求这个力本身正比于 m，否则第一章「加速度与秤上读数无关」就和第二定律打架。第三章要推理的，就是这股力——重量，也就是引力——的公式，以及它和加速度的关系。</p>
+
+  <div class="callout">
+    <b>预定要处理的事情。</b>
+    <ul>
+      <li>重量为什么可以写成 \(F=mg\)，g 又如何从测量里出现。</li>
+      <li>从地球表面的 g，走到万有引力 \(F=GMm/r^{2}\)：平方反比、相互性、以及为什么分子里必须有两边的质量。</li>
+      <li>回头闭合第一章：\(a=F/m=g\)，质量消掉，所以不同「多重」的球加速度一样。</li>
+      <li>量和量纲：G 的单位如何由已经有的 M、L、T 定出来；不再偷偷引进新的不可测量。</li>
+    </ul>
+  </div>
+
+  <p>前两章若结构要改，这一章的入口也会跟着改。所以此处只留目录，不写推导。</p>
+
+  <nav class="chapter-nav">
+    <a href="02-force.html">上一章 · 力：加速度从哪里来</a>
+    <a href="../index.html">返回物理目录</a>
+    <span class="muted">正文待写</span>
+  </nav>
+</article>
+
+<footer class="site-foot">基础力学 · 第三章 · 占位</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  }
+});
+</script>
+</body>
+</html>

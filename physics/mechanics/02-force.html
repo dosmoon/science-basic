@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二章 · 力：加速度从哪里来</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body>
+<header class="site-nav">
+  <div class="inner">
+    <a class="brand" href="../../index.html">基础科学 <small>MKS</small></a>
+    <nav>
+      <a href="../../index.html">首页</a>
+      <a href="../index.html" aria-current="page">物理</a>
+      <a href="../../动点函数探究题_生成器.html">数学</a>
+    </nav>
+  </div>
+</header>
+
+<article class="essay">
+  <p class="crumb"><a href="../../index.html">首页</a> / <a href="../index.html">物理</a> / 基础力学</p>
+  <p class="kicker">Mechanics · Chapter 02</p>
+  <header>
+    <h1>力：加速度从哪里来</h1>
+    <p class="deck">第一章把位移、时间、速度、加速度的关系找清楚了，还留下两条现象：斜面上加速度恒定，并且跟球在秤上有多重无关。这一章问的是缺口本身——加速度从哪儿来。</p>
+    <div class="hr"></div>
+  </header>
+
+  <h2>一、问题换了</h2>
+  <p>运动学已经够用：知道 a 是恒定的，就可以用公式预报以后任何时刻的位置和速度。可公式不解释 a 为什么在那儿。换一副更陡的斜面，a 会变；放到尽量光滑的水平桌上，a 几乎变成 0。加速度像是被什么东西管着。这一章要把这个「什么」测量出来、命名、写成最省的数学式。</p>
+  <p>引力还不必出场。斜面上那个恒定的 a 究竟是不是地球在拉，拉的规则长什么样，是第三章的事。这一章只处理更窄的一句：<strong>同样可重复的作用，会对应多大的加速度。</strong></p>
+
+  <h2>二、亚里士多德那套很粗糙的看法</h2>
+  <p>历史要先回到运动的原因。亚里士多德的观点贴近日常：物体被推动，才运动；推动停下来，运动就停下来。推箱子、拉车、划船，都像在给这个说法作证。</p>
+  <p>粗糙之处在于：它把处处存在的阻力，当成了运动的本质。地上没有无摩擦的平面，空气里没有无阻力的飞行。经验看见的是「不推就停」，看不见的是：停下来的真正原因，是另一种作用还在。若把「推动」理解成产生速度，第一章测到的恒定加速度就没有位置——匀加速明明是速度一直在变，并不是维持一个固定快慢。</p>
+
+  <figure class="diagram" aria-label="亚里士多德与伽利略的对比">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="240" fill="#FBF8F1"/>
+      <text x="180" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="15" fill="#1d2630">亚里士多德：不推就停</text>
+      <text x="540" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="15" fill="#1d2630">伽利略：去掉阻力，运动保持</text>
+      <line x1="360" y1="16" x2="360" y2="224" stroke="#d9d2c2"/>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <rect x="56" y="128" width="64" height="32" rx="4" fill="#bf4a22"/>
+        <path d="M42 144 h12" stroke="#1a5fa3" stroke-width="3"/>
+        <path d="M48 138 l6 6 -6 6" fill="none" stroke="#1a5fa3" stroke-width="3"/>
+        <text x="88" y="149" text-anchor="middle" fill="#FBF8F1" font-size="12">在推</text>
+        <text x="88" y="180">有推动 · 有运动</text>
+        <rect x="210" y="128" width="64" height="32" rx="4" fill="#cfc7b4"/>
+        <text x="242" y="149" text-anchor="middle" fill="#1d2630" font-size="12">停下</text>
+        <text x="242" y="180">手松开 · 车停住</text>
+      </g>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <line x1="400" y1="164" x2="690" y2="164" stroke="#1d2630" stroke-width="2"/>
+        <rect x="470" y="136" width="54" height="26" rx="3" fill="#1a5fa3"/>
+        <path d="M530 149 h36" stroke="#1a5fa3" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="545" y="128" text-anchor="middle">匀速，一直走</text>
+        <text x="545" y="198">不是「自己停」，是「没人再改它」</text>
+      </g>
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1a5fa3"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 2-1</span>左边是日常经验，右边是把阻力抽掉以后的极限图像。加速度为 0，也是一种要解释的状态。</figcaption>
+  </figure>
+
+  <h2>三、先看加速度变成 0 的时候</h2>
+  <p>伽利略做的，仍是第一章那套凹槽轨道里的铜球。从同一高度释放。下面接一段越来越光滑的水平滑轨。他看见一件很具体的事：</p>
+  <blockquote>
+    底下的滑轨越光滑，滚得越远。把这件事用极限推到「绝对光滑」——阻力没有了——球就会滚个不停。
+  </blockquote>
+  <p>同一高度意味着到达底部时，快慢差不多——这是第一章已经测过的。差在水平段：粗糙就很快把速度磨掉，光滑就把速度保存得更久。极限里，没有东西来改这个速度，加速度为 0，运动成为状态，而不再需要持续的推动。</p>
+
+  <figure class="diagram" aria-label="斜面接水平滑轨">
+    <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="260" fill="#FBF8F1"/>
+      <polygon points="40,80 40,200 220,200" fill="#efe9da" stroke="#1d2630" stroke-width="1.5"/>
+      <line x1="40" y1="80" x2="220" y2="200" stroke="#c4b89a" stroke-width="12" stroke-linecap="round"/>
+      <line x1="40" y1="80" x2="220" y2="200" stroke="#1d2630" stroke-width="1.8"/>
+      <line x1="220" y1="200" x2="700" y2="200" stroke="#c4b89a" stroke-width="12"/>
+      <line x1="220" y1="200" x2="700" y2="200" stroke="#1d2630" stroke-width="1.8"/>
+      <circle cx="97" cy="104" r="12" fill="#bf4a22"/>
+      <circle cx="300" cy="188" r="12" fill="#bf4a22"/>
+      <circle cx="430" cy="188" r="12" fill="#bf4a22" opacity=".55"/>
+      <circle cx="580" cy="188" r="12" fill="#bf4a22" opacity=".28"/>
+      <path d="M320 170 H400" stroke="#1a5fa3" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="28" y="48" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">同一高度释放</text>
+      <text x="28" y="66" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">h 相同 → 到底时速度相近</text>
+      <text x="500" y="44" font-family="Public Sans, sans-serif" font-size="13" fill="#1a5fa3">越光滑，停得越远</text>
+      <text x="500" y="62" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">μ → 0 时，没有「停」</text>
+      <text x="80" y="230" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">斜面：第一章测过，a 恒定</text>
+      <text x="420" y="230" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">水平：阻力决定还能走多远</text>
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1a5fa3"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 2-2</span>同一高度释放，水平段越光滑走得越远。极限光滑就是「加速度为 0 也是状态」的实验胚胎。</figcaption>
+  </figure>
+
+  <div class="panel" id="galileo-lab">
+    <h3>动手：光滑程度</h3>
+    <div class="ctrl">
+      <label>阻力 μ <input id="mu" type="range" min="0" max="40" value="18"> <span class="readout" id="muVal"></span></label>
+      <span class="readout" id="distVal"></span>
+    </div>
+    <svg id="galileoSvg" viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" aria-label="可调光滑程度的小球">
+      <rect width="720" height="160" fill="#fcfaf4"/>
+      <polygon points="20,40 20,140 160,140" fill="#efe9da" stroke="#1d2630"/>
+      <line x1="20" y1="40" x2="160" y2="140" stroke="#c4b89a" stroke-width="10" stroke-linecap="round"/>
+      <line x1="20" y1="40" x2="160" y2="140" stroke="#1d2630" stroke-width="1.6"/>
+      <line x1="160" y1="140" x2="700" y2="140" stroke="#c4b89a" stroke-width="10"/>
+      <line x1="160" y1="140" x2="700" y2="140" stroke="#1d2630" stroke-width="1.6"/>
+      <circle cx="65" cy="60" r="10" fill="#bf4a22"/>
+      <circle id="block" cx="250" cy="129" r="11" fill="#bf4a22"/>
+      <circle id="stopMark" cx="400" cy="140" r="4" fill="#1a5fa3"/>
+      <text id="infLabel" x="400" y="28" font-family="Public Sans, sans-serif" font-size="13" fill="#1f7a52" opacity="0">μ = 0 ，一直运动下去 →</text>
+    </svg>
+    <p class="hint">模型很粗：斜面沿用第一章，到底速度由高度决定；水平段以一个与 μ 成正比的加速度减速。停下来的距离大约是 h/μ。μ 越小，越远；μ 到 0，没有终点。</p>
+  </div>
+
+  <p>牛顿把这件事做成更大范围的推广，变成第一定律：匀速直线运动（含静止）是状态的保持，不需要别的因素介入。要想改变这个状态，必须有外部的作用。这种作用被命名为<strong>力</strong>。问题立刻变成可测量的：这个作用怎么数学化？同样的作用，加速度是不是一样大？</p>
+
+  <h2>四、历史上有没有「同样的力，加速度多大」的实验</h2>
+  <p>有。只是干净的实验室版本来得比定律本身晚。</p>
+  <p>牛顿自己写第二定律时，用的是动量的变化：外力与它所引起的运动改变成正比，方向沿外力。他倚靠的是碰撞、摆，以及行星运动已经整理好的规律，并不是一张「挂钩砝码拉小车」的数据表。定律先以数学形式站稳，专门用来把 \(F\) 和 \(a\) 对在一起的仪器，要再等一个世纪。</p>
+  <p>1784 年，剑桥的乔治·阿特伍德（George Atwood）发表《论物体的直线运动与转动》，并给出一套原初实验。阿特伍德机就是为这件事造的：两盘砝码跨过轻滑轮对吊。一边稍重，系统就缓慢加速——加速度被故意做得比自由落体小很多，十八世纪用秒摆就能计时。</p>
+  <p>关键在于控制变量，而不是装置漂不漂亮：</p>
+  <ul>
+    <li><strong>净作用</strong>来自两边拉力之差。把一小块骑码从这一边挪到那一边，两边「有多重」的差变了，总的「有多少东西在被加速」几乎不变。这是在改变力、固定惯性。</li>
+    <li>反过来，两边一起加重、差保持不动，则是在固定净作用、改变惯性。</li>
+  </ul>
+  <p>阿特伍德的实验表把三列写在一起：moving force（使动的力）、quantity of matter moved（被推动的物质的量）、accelerating force（加速的程度）。用今天的字母读，就是 \(F = ma\)。这是历史上最明确的一次：用可重复的实验室手续，去量「同样的力产生多大的加速度」。</p>
+  <div class="formula">\(a = \dfrac{F_{\mathrm{net}}}{m_{1}+m_{2}}\)</div>
+  <p>装置里的拉力，仍然来自悬挂物「往下坠」的那股劲。力和地球的吸引在实验室里拆不开——熟知的就是斜面滚球，阿特伍德只是把同一困难做得更可测。我们这一章借用它当「可重复的拉力」，<strong>并不调用引力定律</strong>。悬挂物为什么往下坠，以及那股坠劲为什么恰好跟「多重」成正比，留给第三章。</p>
+
+  <figure class="diagram" aria-label="阿特伍德机">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="240" fill="#FBF8F1"/>
+      <circle cx="180" cy="48" r="28" fill="none" stroke="#1d2630" stroke-width="3"/>
+      <line x1="152" y1="48" x2="152" y2="150" stroke="#1d2630" stroke-width="2"/>
+      <line x1="208" y1="48" x2="208" y2="110" stroke="#1d2630" stroke-width="2"/>
+      <rect x="136" y="150" width="32" height="48" fill="#1a5fa3"/>
+      <rect x="194" y="110" width="28" height="28" fill="#bf4a22"/>
+      <text x="152" y="218" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">m₁</text>
+      <text x="208" y="158" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">m₂</text>
+      <text x="400" y="64" font-family="Newsreader, serif" font-size="18" fill="#1d2630">把加速做成可计时的慢动作</text>
+      <text x="400" y="96" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">净力：两边拉力之差</text>
+      <text x="400" y="116" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">惯性：两边物质的量之和</text>
+      <text x="400" y="148" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">挪骑码：力变，总惯性几乎不变</text>
+      <text x="400" y="168" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">两边同加码：力不变，惯性变</text>
+      <text x="400" y="200" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">拉力仍来自悬挂，引力公式还不用</text>
+    </svg>
+    <figcaption><span class="n">图 2-3</span>阿特伍德机补上了「纯拉力实验」在伽利略时代的缺位。它验证的是力与加速度、惯性的关系，不是万有引力。</figcaption>
+  </figure>
+
+  <p>十九世纪课堂里的 Fletcher 小车，以及更晚的气垫导轨，是同一逻辑的水平版：挂钩砝码提供可逐档改变的拉力，小车或滑块提供可逐档改变的惯性。测的仍是第一章就会的东西——路程与时间，再算出 a。控制变量做成两张图：力一定，a 与 m 成反比；m 一定，a 与 F 成正比。</p>
+
+  <h2>五、质量和重量，这一章必须开始分开说</h2>
+  <p>第一章故意混着：秤上的读数可以记录，但身份未定。现在要给两个不同的职务：</p>
+  <ul>
+    <li><strong>惯性质量</strong> m：同样的力推上去，谁加速慢，谁的 m 大。它来自动力学实验，不是来自秤的刻度。</li>
+    <li><strong>重量</strong>：弹簧秤或阿特伍德机里那股可重复的拉力。它是一种力，单位将是牛顿。</li>
+  </ul>
+  <p>在地球表面的实验室里，这两样几乎成正比，所以日常语言才把它们揉在一起。正比本身是一个需要解释的实验事实，不是定义。解释要等引力被写成公式——又是第三章。这一章只要求：写 \(F=ma\) 的时候，m 指的是惯性，F 指的是那种会改变速度的作用。</p>
+
+  <h2>六、把力写成公式</h2>
+  <p>回溯已经有的测量。速度的变化，跟力成正比，跟惯性质量成反比。加速度正是速度的变化率：</p>
+  <div class="formula">\(\dot{v} = \dfrac{F}{m}\qquad\text{也就是}\qquad F = m a\)</div>
+  <p>需不需要一个比例系数？从量纲角度，不需要。因为我们直接定义：让 1 千克（惯性）的物体产生 1 米每秒方的加速度，这个力就叫 1 牛顿。系数被吃进单位里了。</p>
+  <div class="formula">\(1\,\mathrm{N} = 1\,\mathrm{kg}\cdot\mathrm{m\,s^{-2}}\qquad [F]=\mathrm{M\,L\,T^{-2}}\)</div>
+  <p>千克在这里才真正作为力学的第三个基底量进来：它标记的是惯性，不再只是秤盘上那个含糊的刻度。</p>
+
+  <figure class="diagram" aria-label="同样的力作用在不同质量上">
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="250" fill="#FBF8F1"/>
+      <text x="360" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="15" fill="#1d2630">同一大小的力 F，惯性质量越大，加速度越小</text>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <rect x="70" y="50" width="36" height="36" fill="#1a5fa3"/>
+        <text x="88" y="102" text-anchor="middle">m</text>
+        <path d="M114 68 h220" stroke="#bf4a22" stroke-width="3" marker-end="url(#arr3)"/>
+        <text x="360" y="64" fill="#bf4a22">a</text>
+        <rect x="70" y="112" width="56" height="36" fill="#1a5fa3"/>
+        <text x="98" y="164" text-anchor="middle">2m</text>
+        <path d="M134 130 h110" stroke="#bf4a22" stroke-width="3" marker-end="url(#arr3)"/>
+        <text x="262" y="126" fill="#bf4a22">a/2</text>
+        <rect x="70" y="174" width="88" height="36" fill="#1a5fa3"/>
+        <text x="114" y="226" text-anchor="middle">4m</text>
+        <path d="M166 192 h55" stroke="#bf4a22" stroke-width="3" marker-end="url(#arr3)"/>
+        <text x="240" y="188" fill="#bf4a22">a/4</text>
+      </g>
+      <defs>
+        <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#bf4a22"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 2-4</span>理想实验问：同样的力，对不同惯性质量，加速度一样吗？不一样。a 与 F 成正比，与 m 成反比。</figcaption>
+  </figure>
+
+  <div class="panel">
+    <h3>动手：同一推力，惯性质量不同</h3>
+    <div class="ctrl">
+      <label>质量比 m₂ / m₁ <input id="massRatio" type="range" min="1" max="8" value="3"> <span class="readout" id="ratioVal"></span></label>
+    </div>
+    <svg id="fmaSvg" viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrF" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1a5fa3"/>
+        </marker>
+        <marker id="arrF2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#bf4a22"/>
+        </marker>
+      </defs>
+      <rect width="720" height="130" fill="#fcfaf4"/>
+      <text x="24" y="28" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">同一 F 向右推</text>
+      <rect id="b1" x="40" y="48" width="36" height="36" fill="#1a5fa3"/>
+      <rect id="b2" x="40" y="48" width="36" height="36" fill="#bf4a22" opacity=".9"/>
+      <path id="a1" d="M0 0" stroke="#1a5fa3" stroke-width="3" fill="none"/>
+      <path id="a2" d="M0 0" stroke="#bf4a22" stroke-width="3" fill="none"/>
+      <text id="a1t" x="0" y="0" font-family="JetBrains Mono, monospace" font-size="12" fill="#1a5fa3"></text>
+      <text id="a2t" x="0" y="0" font-family="JetBrains Mono, monospace" font-size="12" fill="#bf4a22"></text>
+    </svg>
+    <p class="hint" id="fmaHint"></p>
+  </div>
+
+  <table class="dim-table">
+    <thead>
+      <tr><th>量</th><th>怎么来</th><th>量纲</th><th>单位</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>距离 s</td><td>直接测量</td><td>L</td><td>米 m</td></tr>
+      <tr><td>时间 t</td><td>直接测量</td><td>T</td><td>秒 s</td></tr>
+      <tr><td>惯性质量 m</td><td>由 a 与 F 的比值进入</td><td>M</td><td>千克 kg</td></tr>
+      <tr><td>速度 v</td><td>s / t</td><td>L T⁻¹</td><td>m/s</td></tr>
+      <tr><td>加速度 a</td><td>v / t</td><td>L T⁻²</td><td>m/s²</td></tr>
+      <tr><td>力 F</td><td>定义为 m a</td><td>M L T⁻²</td><td>牛顿 N</td></tr>
+    </tbody>
+  </table>
+
+  <h2>七、这一章解决了什么，又留下什么</h2>
+  <p>加速度从力来。没有力（也没有没被抵消的力），加速度为 0，这是第一定律。有力，则 \(a = F/m\)，这是第二定律。阿特伍德机以及后来的小车、气垫导轨，把「同样的力产生多大加速度」做成了可做的实验。</p>
+  <p>回头看第一章的斜面，缺口更清楚了。若力与球的惯性无关，那么更「重」的球应该加速得更慢——第二章的公式就是这么说的。可实验里加速度一样。唯一能两边同时成立的办法是：<strong>斜面上那个还没被命名的力，本身必须跟着惯性一起变。</strong>有一种作用，大小与 m 成正比，方向指向地面。它是重量，也是引力登场前的面具。</p>
+
+  <div class="callout tail">
+    <b>留给第三章的问题。</b> 重量为什么正比于惯性质量？这个力随高度、随天体如何变？把引力写成公式，并接回加速度，是下一章的任务。这一章不再往下推 \(a=g\) 或 \(F=GMm/r^{2}\)。
+  </div>
+
+  <nav class="chapter-nav">
+    <a href="01-measurement.html">上一章 · 测量、量纲、速度与加速度</a>
+    <a href="../index.html">返回物理目录</a>
+    <a href="03-gravity.html">下一章 · 引力</a>
+  </nav>
+</article>
+
+<footer class="site-foot">基础力学 · 第二章 · 加速度从力来</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  }
+
+  var mu = document.getElementById("mu");
+  var muVal = document.getElementById("muVal");
+  var distVal = document.getElementById("distVal");
+  var block = document.getElementById("block");
+  var stopMark = document.getElementById("stopMark");
+  var infLabel = document.getElementById("infLabel");
+  function paintGalileo(){
+    var u = Number(mu.value) / 100;
+    muVal.textContent = u.toFixed(2);
+    if (u < 0.005) {
+      block.setAttribute("cx", "640");
+      stopMark.setAttribute("cx", "700");
+      infLabel.setAttribute("opacity", "1");
+      distVal.textContent = "停不下来（极限）";
+      return;
+    }
+    infLabel.setAttribute("opacity", "0");
+    var d = 1 / u;
+    var x = 160 + Math.min(520, (d / 14) * 520);
+    block.setAttribute("cx", String(x));
+    stopMark.setAttribute("cx", String(x));
+    distVal.textContent = "水平滚动约 " + d.toFixed(1) + " 个高度（h/μ）";
+  }
+  mu.addEventListener("input", paintGalileo);
+  mu.addEventListener("change", paintGalileo);
+  paintGalileo();
+
+  var ratio = document.getElementById("massRatio");
+  var ratioVal = document.getElementById("ratioVal");
+  var b1 = document.getElementById("b1");
+  var b2 = document.getElementById("b2");
+  var a1 = document.getElementById("a1");
+  var a2 = document.getElementById("a2");
+  var a1t = document.getElementById("a1t");
+  var a2t = document.getElementById("a2t");
+  var hint = document.getElementById("fmaHint");
+  function paintFma(){
+    var r = Number(ratio.value);
+    ratioVal.textContent = r + " : 1";
+    var w1 = 36, h = 36;
+    var w2 = 36 + (r - 1) * 10;
+    b1.setAttribute("x", "80"); b1.setAttribute("y", "40");
+    b1.setAttribute("width", w1); b1.setAttribute("height", h);
+    b2.setAttribute("x", "80"); b2.setAttribute("y", "82");
+    b2.setAttribute("width", w2); b2.setAttribute("height", h);
+    var len1 = 220, len2 = 220 / r;
+    a1.setAttribute("d", "M " + (90+w1) + " 58 h " + len1);
+    a1.setAttribute("marker-end", "url(#arrF)");
+    a2.setAttribute("d", "M " + (90+w2) + " 100 h " + len2);
+    a2.setAttribute("marker-end", "url(#arrF2)");
+    a1t.setAttribute("x", 100+w1+len1); a1t.setAttribute("y", 54);
+    a1t.textContent = "a";
+    a2t.setAttribute("x", 100+w2+len2); a2t.setAttribute("y", 96);
+    a2t.textContent = "a/" + r;
+    hint.textContent = "惯性质量变成 " + r + " 倍，同一力下加速度变成 1/" + r + "。";
+  }
+  ratio.addEventListener("input", paintFma);
+  ratio.addEventListener("change", paintFma);
+  paintFma();
+});
+</script>
+</body>
+</html>

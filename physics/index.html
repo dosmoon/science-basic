@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物理 · 基础力学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-nav">
+  <div class="inner">
+    <a class="brand" href="../index.html">基础科学 <small>MKS</small></a>
+    <nav>
+      <a href="../index.html">首页</a>
+      <a href="index.html" aria-current="page">物理</a>
+      <a href="../动点函数探究题_生成器.html">数学</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <p class="crumb"><a href="../index.html">首页</a> / 物理</p>
+  <h1>基础力学</h1>
+  <p class="deck">从可测量开始。第一章用斜面数据长出速度和加速度；第二章问加速度从哪里来，把力写成 \(F=ma\)；第三章才推理引力，并闭合「为什么加速度不看多重」。</p>
+  <article class="card">
+    <span class="pill">CHAPTER 01</span>
+    <h2>测量、量纲、速度与加速度</h2>
+    <p>量纲钉在可测量的单位上。斜面实验把路程、时间拟合成数学模型，得到匀加速，并用不同高度复核。质量和重量这一章还分不清。</p>
+    <ul class="list">
+      <li><a href="mechanics/01-measurement.html">阅读第一章</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <span class="pill">CHAPTER 02</span>
+    <h2>力：加速度从哪里来</h2>
+    <p>亚里士多德的粗糙看法，伽利略把阻力推到极限，牛顿命名力。历史上的阿特伍德机专门测量「同样的力产生多大加速度」。</p>
+    <ul class="list">
+      <li><a href="mechanics/02-force.html">阅读第二章</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <span class="pill">CHAPTER 03</span>
+    <h2>引力</h2>
+    <p>预定推理重力 / 引力公式，并接回加速度。正文等前两章审阅后再写。</p>
+    <ul class="list">
+      <li><a href="mechanics/03-gravity.html">阅读提纲</a></li>
+    </ul>
+  </article>
+</main>
+
+<footer class="site-foot">基础科学 · 物理</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\(", right: "\\)", display: false}
+      ]
+    });
+  }
+});
+</script>
+</body>
+</html>

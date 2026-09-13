@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第一章 · 测量、量纲、速度与加速度</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body>
+<header class="site-nav">
+  <div class="inner">
+    <a class="brand" href="../../index.html">基础科学 <small>MKS</small></a>
+    <nav>
+      <a href="../../index.html">首页</a>
+      <a href="../index.html" aria-current="page">物理</a>
+      <a href="../../动点函数探究题_生成器.html">数学</a>
+    </nav>
+  </div>
+</header>
+
+<article class="essay">
+  <p class="crumb"><a href="../../index.html">首页</a> / <a href="../index.html">物理</a> / 基础力学</p>
+  <p class="kicker">Mechanics · Chapter 01</p>
+  <header>
+    <h1>测量、量纲、速度与加速度</h1>
+    <p class="deck">科学从可测量开始。量纲的基础，就是这些可测量数据的单位。斜面上量出路程和时间，用数学模型把数据收成公式——速度、加速度就这样长出来。力，还轮不到。</p>
+    <div class="hr"></div>
+  </header>
+
+  <h2>一、科学从可测量开始</h2>
+  <p>科学的发现，也是科学研究的日常：从已经能测、能度量的东西出发，走向还不知道的现象，再把现象收成规律。不是先有一个神秘的「力」或「本质」，再去迁就观察；是先问清楚——这一次实验里，什么量是尺子、钟、秤真正读得出来的。</p>
+  <p>量纲的基础，就是这些可测量数据的单位。单位不是装饰，是记账规则：每一个新符号，都必须能兑换回已经测过的东西。兑换不回去，那个符号就还没有物理身份。</p>
+  <p>这一章能直接动手的，其实就两样半。一把尺量距离，一座钟量时间。另外还有一架秤：它给出一个读数，习惯上用千克来记。可在目前这个物理认知阶段，<strong>我们还分不清这个读数到底是质量还是重量</strong>——只知道换一颗「秤上更重」的球，读数会变。速度不是第三种感官，必须从「这段距离花了多少时间」里算出来。</p>
+
+  <figure class="diagram" aria-label="直接测量与派生量">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="300" fill="#FBF8F1"/>
+      <text x="360" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">可测量 → 派生量（这一章只走到加速度）</text>
+      <g font-family="Public Sans, sans-serif">
+        <rect x="70" y="52" width="160" height="80" rx="12" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="150" y="86" text-anchor="middle" font-size="18" fill="#1d2630">距离 s</text>
+        <text x="150" y="110" text-anchor="middle" font-size="12" fill="#5b6470">米 · L</text>
+        <rect x="280" y="52" width="160" height="80" rx="12" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="360" y="86" text-anchor="middle" font-size="18" fill="#1d2630">时间 t</text>
+        <text x="360" y="110" text-anchor="middle" font-size="12" fill="#5b6470">秒 · T</text>
+        <rect x="490" y="52" width="160" height="80" rx="12" fill="#efe9da" stroke="#b8862a"/>
+        <text x="570" y="82" text-anchor="middle" font-size="16" fill="#1d2630">秤上的读数</text>
+        <text x="570" y="104" text-anchor="middle" font-size="12" fill="#5b6470">千克记号 · 还分不清</text>
+        <text x="570" y="120" text-anchor="middle" font-size="11" fill="#5b6470">质量还是重量？</text>
+      </g>
+      <path d="M150 132 v22 H360 v-22 M360 154 v18" fill="none" stroke="#cfc7b4" stroke-width="1.5"/>
+      <g font-family="Public Sans, sans-serif">
+        <rect x="80" y="186" width="230" height="58" rx="10" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="195" y="212" text-anchor="middle" font-size="16" fill="#1d2630">速度  v = Δs / Δt</text>
+        <text x="195" y="232" text-anchor="middle" font-size="11" fill="#5b6470">米每秒 · L T⁻¹</text>
+        <rect x="360" y="186" width="250" height="58" rx="10" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="485" y="212" text-anchor="middle" font-size="16" fill="#1d2630">加速度  a = Δv / Δt</text>
+        <text x="485" y="232" text-anchor="middle" font-size="11" fill="#5b6470">米每秒方 · L T⁻²</text>
+      </g>
+      <text x="360" y="276" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">秤上的读数这一章只当控制变量：换一颗球，看加速度变不变。力先不要写进来。</text>
+    </svg>
+    <figcaption><span class="n">图 1-1</span>量纲钉在可测量上。速度、加速度都是距离与时间的组合；秤上的读数可以记录，但还不能宣布它是质量还是重量。</figcaption>
+  </figure>
+
+  <p>入门的单位制仍是米–千克–秒。只是要诚实：千克此刻只是秤的刻度，还不是「惯性」的定义。速度和加速度的量纲，这一章只用到米和秒。后面所有新符号——力、动量、引力——都必须继续能兑换回这些单位，不许偷偷引进第四种不可测的东西。</p>
+
+  <h2>二、斜面上能测什么</h2>
+  <p>自由落体太快，十六世纪、十七世纪的钟量不动。伽利略把下落「稀释」到斜面上。实验用的不是在木板上滑动的滑块，而是<strong>凹槽轨道里的铜球</strong>：接触从一整面收成近乎一条线，滑动换成滚动，摩擦带来的干扰被压到最小。图画一律画小球，就是这个缘故。</p>
+  <p>滚动仍带着转动，量到的加速度会比「纯滑动、完全无摩擦」略小。这一章要的不是宣称摩擦已经等于零，而是干扰足够小、\(s\propto t^{2}\) 才看得清。斜面够长、倾角够缓，时间才落进水钟、脉搏、节拍能分辨的区间。</p>
+  <p>能记下来的原始数据很土：沿轨道滚了多远，花了多少时间，球在秤上是几。快慢要事后算。</p>
+
+  <figure class="diagram" aria-label="斜面凹槽轨道上的小球">
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="250" fill="#FBF8F1"/>
+      <polygon points="40,50 40,200 420,200" fill="#efe9da" stroke="#1d2630" stroke-width="1.5"/>
+      <line x1="40" y1="50" x2="420" y2="200" stroke="#c4b89a" stroke-width="12" stroke-linecap="round"/>
+      <line x1="40" y1="50" x2="420" y2="200" stroke="#1d2630" stroke-width="1.8"/>
+      <circle cx="128" cy="71" r="13" fill="#bf4a22"/>
+      <circle cx="303" cy="140" r="13" fill="#bf4a22"/>
+      <path d="M148 64 L278 116" stroke="#1a5fa3" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <text x="198" y="78" transform="rotate(21.8 198 78)" font-family="Public Sans, sans-serif" font-size="13" fill="#1a5fa3">路程 s</text>
+      <text x="200" y="168" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">凹槽轨道</text>
+      <text x="40" y="28" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">从静止释放 · 球在槽里滚</text>
+      <text x="460" y="70" font-family="Public Sans, sans-serif" font-size="14" fill="#1d2630">原始记录</text>
+      <text x="460" y="98" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">· 路程 s（尺）</text>
+      <text x="460" y="120" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">· 时间 t（钟）</text>
+      <text x="460" y="142" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">· 秤上的读数（先记下）</text>
+      <text x="460" y="178" font-family="Public Sans, sans-serif" font-size="13" fill="#1a5fa3">事后才算：速度、加速度</text>
+      <text x="460" y="200" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">到底时的快慢，也是算出来的</text>
+    </svg>
+    <figcaption><span class="n">图 1-2</span>球贴在凹槽轨道上，不钻进木板里。用球、用槽，是为了把摩擦干扰降到测量还能看见规律的程度。</figcaption>
+  </figure>
+
+  <h2>三、数据怎么变成数学模型</h2>
+  <p>测量本身还不是规律。规律是：给数据一个尽可能省的数学假设，把数代进去，看它撑不撑得住；撑住了，才得到公式。</p>
+  <p>先别命名加速度。只看路程和时间。若速度始终一样，路程应与时间成正比：\(s \propto t\)。把斜面上的数代进去，对不上——后面同样长的一段时间里，多走的路越来越多。换一个假设：路程与时间的平方成正比，</p>
+  <div class="formula">\(s = k\, t^{2}\)</div>
+  <p>这一次，数据开始听话。伽利略当时看到的，是等价的另一种写法：把总时间切成相等的小段，每一小段里新增加的路程，大约成 1、3、5、7……奇数比。累计起来，总路程就是 1、4、9、16，也就是平方。</p>
+
+  <figure class="diagram" aria-label="等时段路程成奇数比">
+    <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="220" fill="#FBF8F1"/>
+      <line x1="40" y1="160" x2="700" y2="160" stroke="#1d2630" stroke-width="2"/>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <rect x="50" y="128" width="70" height="32" fill="#1a5fa3"/>
+        <text x="85" y="148" text-anchor="middle" fill="#FBF8F1">1</text>
+        <text x="85" y="182" text-anchor="middle">第 1 段</text>
+        <rect x="120" y="96" width="140" height="64" fill="#1a5fa3" opacity=".85"/>
+        <text x="190" y="132" text-anchor="middle" fill="#FBF8F1">3</text>
+        <text x="190" y="182" text-anchor="middle">第 2 段</text>
+        <rect x="260" y="64" width="210" height="96" fill="#1a5fa3" opacity=".7"/>
+        <text x="365" y="118" text-anchor="middle" fill="#FBF8F1">5</text>
+        <text x="365" y="182" text-anchor="middle">第 3 段</text>
+        <rect x="470" y="32" width="210" height="128" fill="#1a5fa3" opacity=".55"/>
+        <text x="575" y="100" text-anchor="middle" fill="#1d2630">7</text>
+        <text x="575" y="182" text-anchor="middle">第 4 段</text>
+      </g>
+      <text x="360" y="208" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">累计路程 1 ∶ 4 ∶ 9 ∶ 16  →  s ∝ t²</text>
+    </svg>
+    <figcaption><span class="n">图 1-3</span>等时长里新走的路成奇数比，是 \(s \propto t^{2}\) 的实验面貌。公式是后来给这组数起的名字。</figcaption>
+  </figure>
+
+  <h3>速度：先有平均，再谈变化</h3>
+  <p>有了路程和时间，第一个派生量是速度。测量真正直接给出的，是某个区间上的<strong>平均速度</strong>：</p>
+  <div class="formula">\(v_{\mathrm{avg}} = \dfrac{\Delta s}{\Delta t}\qquad [v] = \mathrm{m\,s^{-1}} = \mathrm{L\,T^{-1}}\)</div>
+  <p>从静止滚到某处，平均速度是 \(s/t\)。若再做一个数学假设——快慢是均匀变过来的，而不是忽快忽慢——那么这段过程的末速度，就是平均速度的两倍：开头是 0，末了是 \(v\)，均匀的话平均值恰好是 \(v/2\)。于是</p>
+  <div class="formula">\(v = 2\,\dfrac{s}{t}\)</div>
+  <p>这不是新测量，是「均匀变化」这个模型加进去之后的推论。模型对不对，要另找办法检验。</p>
+
+  <h3>加速度：速度本身还在变</h3>
+  <p>单位时间能跑多远，本身还在变。把这个变化率叫做加速度：</p>
+  <div class="formula">\(a = \dfrac{\Delta v}{\Delta t}\qquad [a] = \mathrm{m\,s^{-2}} = \mathrm{L\,T^{-2}}\)</div>
+  <p>若速度从 0 均匀增到 \(v\)，用时 \(t\)，则 \(a = v/t\)。再把上面的 \(v = 2s/t\) 代进去：</p>
+  <div class="formula">\(a = \dfrac{2s}{t^{2}}\)</div>
+  <p>回头看实验拟合出来的 \(s = k t^{2}\)，立刻得到 \(a = 2k\)。<strong>k 在这副斜面上是同一个数，所以加速度也是同一个数。</strong>匀加速不是口号，是「平方律」这个数学模型的直接后果。</p>
+  <p>从静止出发，把符号整理成以后一直要用的三句：</p>
+  <div class="formula">
+    \(v = a t,\qquad s = \dfrac12 a t^{2},\qquad v^{2} = 2 a s\)
+  </div>
+  <p>第三句尤其适合斜面：到底时的速度不好用钟直接读，但一旦有办法估出 \(v\)，路程 \(s\) 是尺子量的，加速度就可以从 \(a = v^{2}/(2s)\) 算回来。有初速度时，多写一项即可：\(v = v_0 + at\)，\(s = v_0 t + \frac12 at^{2}\)，\(v^{2} = v_0^{2} + 2as\)。这一章用从静止释放就够了。</p>
+
+  <figure class="diagram" aria-label="s-t、v-t、a-t 三条图">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="240" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <rect x="24" y="36" width="216" height="168" fill="#fcfaf4" stroke="#d9d2c2"/>
+        <path d="M48 180 Q120 180 200 56" fill="none" stroke="#1a5fa3" stroke-width="2.5"/>
+        <text x="132" y="28" text-anchor="middle" fill="#1d2630" font-size="13">s–t ：抛物线</text>
+        <text x="132" y="220" text-anchor="middle">s ∝ t²</text>
+        <rect x="252" y="36" width="216" height="168" fill="#fcfaf4" stroke="#d9d2c2"/>
+        <path d="M276 180 L444 56" fill="none" stroke="#bf4a22" stroke-width="2.5"/>
+        <text x="360" y="28" text-anchor="middle" fill="#1d2630" font-size="13">v–t ：直线</text>
+        <text x="360" y="220" text-anchor="middle">v = a t</text>
+        <rect x="480" y="36" width="216" height="168" fill="#fcfaf4" stroke="#d9d2c2"/>
+        <path d="M504 110 H672" fill="none" stroke="#1f7a52" stroke-width="2.5"/>
+        <text x="588" y="28" text-anchor="middle" fill="#1d2630" font-size="13">a–t ：水平线</text>
+        <text x="588" y="220" text-anchor="middle">a 恒定</text>
+      </g>
+    </svg>
+    <figcaption><span class="n">图 1-4</span>同一套匀加速模型的三张脸。实验先逼出左边；中间、右边是定义速度和加速度之后的推论。</figcaption>
+  </figure>
+
+  <h2>四、换高度，看平均加速度是不是同一个数</h2>
+  <p>只在一个高度上得到 \(s \propto t^{2}\)，还可能是碰巧。更干净的检验是：<strong>同一副斜面，从不同高度滚下来</strong>，在底部估速度，再算这一趟的平均加速度。</p>
+  <p>底部速度怎么估？斜面尽头接一小段尽量光滑的水平滑轨，看它在已知短时间里走出多远——那就是到底时的速度。粗糙些的做法，是把到底时间也测准，用 \(v = 2s/t\)。两种路都落到同一句：</p>
+  <div class="formula">\(a = \dfrac{v^{2}}{2s}\qquad\text{或}\qquad a = \dfrac{2s}{t^{2}}\)</div>
+  <p>若斜面上各处的加速并不恒定，不同路程上算出来的这个「平均加速度」会对不齐。实验的结果是：对齐了。从 30 厘米滚、从 80 厘米滚、从接近顶端滚，算出来的 \(a\) 基本是同一个数。于是可以粗糙、但已经是数学建模意义上的结论：</p>
+  <blockquote>在这副斜面上，加速度基本恒定。</blockquote>
+
+  <table class="data-table" aria-label="不同高度的平均加速度">
+    <thead>
+      <tr>
+        <th>释放路程 s / m</th>
+        <th>到底时间 t / s</th>
+        <th>到底速度 v / (m s⁻¹)</th>
+        <th>a = 2s / t²</th>
+        <th>a = v² / (2s)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>0.50</td><td>0.65</td><td>1.55</td><td>2.37</td><td>2.40</td></tr>
+      <tr><td>1.00</td><td>0.91</td><td>2.19</td><td>2.41</td><td>2.40</td></tr>
+      <tr><td>1.50</td><td>1.12</td><td>2.68</td><td>2.39</td><td>2.39</td></tr>
+      <tr><td>2.00</td><td>1.29</td><td>3.10</td><td>2.40</td><td>2.40</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="5">一组理想化后的示意数据。真实斜面有摩擦和计时误差，a 只会「基本一样」，不会像代数题那样位位相同。</td></tr>
+    </tfoot>
+  </table>
+
+  <div class="panel" id="height-lab">
+    <h3>动手：换高度，算平均加速度</h3>
+    <div class="ctrl">
+      <label>释放路程 s <input id="pathS" type="range" min="40" max="200" value="100"> <span class="readout" id="sVal"></span></label>
+      <label>秤上的读数 <input id="wRead" type="range" min="1" max="8" value="2"> <span class="readout" id="wVal"></span></label>
+    </div>
+    <svg id="heightSvg" viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" aria-label="不同高度的斜面小球">
+      <rect width="720" height="170" fill="#fcfaf4"/>
+      <polygon points="20,36 20,150 380,150" fill="#efe9da" stroke="#1d2630"/>
+      <line x1="20" y1="36" x2="380" y2="150" stroke="#c4b89a" stroke-width="10" stroke-linecap="round"/>
+      <line x1="20" y1="36" x2="380" y2="150" stroke="#1d2630" stroke-width="1.6"/>
+      <line x1="380" y1="150" x2="700" y2="150" stroke="#c4b89a" stroke-width="10"/>
+      <line x1="380" y1="150" x2="700" y2="150" stroke="#1d2630" stroke-width="1.6"/>
+      <circle id="hBall" cx="80" cy="50" r="11" fill="#bf4a22"/>
+      <circle id="hBallEnd" cx="430" cy="139" r="11" fill="#bf4a22"/>
+      <text id="hTag" x="24" y="24" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470"></text>
+    </svg>
+    <p class="hint" id="hHint"></p>
+    <div class="ctrl">
+      <button type="button" id="recordBtn">记下这一趟</button>
+      <button type="button" class="ghost" id="clearBtn">清空记录</button>
+    </div>
+    <table class="data-table" id="trialTable">
+      <thead>
+        <tr>
+          <th>s / m</th>
+          <th>秤上读数</th>
+          <th>t / s</th>
+          <th>v / (m s⁻¹)</th>
+          <th>a = v²/(2s)</th>
+        </tr>
+      </thead>
+      <tbody id="trialBody">
+        <tr id="trialEmpty"><td colspan="5">把球放到不同高度，点「记下这一趟」。各行最后一列应几乎相同。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>五、换一颗「更重」的球</h2>
+  <p>同一副斜面，换秤上读数明显不同的球，再做第四节那一套。时间、到底速度、算出来的平均加速度，仍然基本一样。自由落体的通俗说法——两个铁球同时落地——是同一件事的极限情形：倾角大到接近竖直，加速度还是不看这颗球在秤上有多重。</p>
+  <p>要立刻声明：这里的「多重」只是秤的读数。质量和重量的区分，这一章还做不到。我们只掌握一个现象：</p>
+  <blockquote>在秤上称出来不一样重的球，在斜面轨道上滚下来的加速度，基本一样。</blockquote>
+  <p>空气阻力够大时，这个现象会被污染，所以理想实验要尽量抽掉空气、减小摩擦。它仍然只是现象。为什么加速度不看「多重」，为什么斜面上会有一个恒定的 a——都还没有答案。</p>
+
+  <figure class="diagram" aria-label="不同秤上读数，同一加速度">
+    <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="220" fill="#FBF8F1"/>
+      <polygon points="40,40 40,190 300,190" fill="#efe9da" stroke="#1d2630"/>
+      <line x1="40" y1="40" x2="300" y2="190" stroke="#c4b89a" stroke-width="12" stroke-linecap="round"/>
+      <line x1="40" y1="40" x2="300" y2="190" stroke="#1d2630" stroke-width="1.8"/>
+      <circle cx="105" cy="59" r="16" fill="#1d2630"/>
+      <circle cx="175" cy="106" r="10" fill="#bf4a22"/>
+      <text x="360" y="56" font-family="Newsreader, serif" font-size="18" fill="#1d2630">a 一样，秤上的读数不一样</text>
+      <text x="360" y="88" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">这是实验事实，不是解释。</text>
+      <text x="360" y="112" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">我们还分不清质量与重量：</text>
+      <text x="360" y="132" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">千克此刻只是秤的刻度。</text>
+      <text x="360" y="168" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">比萨斜塔的故事是戏剧；可靠的工作仍是斜面。</text>
+      <text x="360" y="188" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">原因要等力和引力都被写进公式。</text>
+    </svg>
+    <figcaption><span class="n">图 1-5</span>伽利略抓住了「重的并不因此掉得更快」。这一章只登记现象，不调用 \(F=ma\)。</figcaption>
+  </figure>
+
+  <h2>六、量纲表，以及这一章找到的关系</h2>
+  <p>把符号收拢。能直接测的落在前三行；速度、加速度是组合。力不要出现在这张表里——它还没有被这一章的测量定义出来。</p>
+  <table class="dim-table">
+    <thead>
+      <tr><th>量</th><th>怎么来</th><th>量纲</th><th>单位</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>距离 s</td><td>直接测量</td><td>L</td><td>米 m</td></tr>
+      <tr><td>时间 t</td><td>直接测量</td><td>T</td><td>秒 s</td></tr>
+      <tr><td>秤上的读数</td><td>直接测量，身份未定</td><td>（先记作千克）</td><td>kg 的刻度</td></tr>
+      <tr><td>速度 v</td><td>s / t</td><td>L T⁻¹</td><td>m/s</td></tr>
+      <tr><td>加速度 a</td><td>v / t</td><td>L T⁻²</td><td>m/s²</td></tr>
+    </tbody>
+  </table>
+  <p>位移、时间、速度、加速度之间的关系，已经找清楚了。从静止开始：</p>
+  <div class="formula">
+    \(v = at,\quad s=\dfrac12 at^{2},\quad v^{2}=2as,\quad [v]=\mathrm{L\,T^{-1}},\quad [a]=\mathrm{L\,T^{-2}}\)
+  </div>
+
+  <h2>七、方法，以及留下的尾巴</h2>
+  <p>基础数据来自可测量。对数据作分析，给出猜想，再写成数学模型。亚里士多德那套「不推就停」的日常观感，以及「力」这个名字，都还没有资格进入公式——不是它们不重要，是这一章的测量还没有逼到那一步。</p>
+  <p>量纲系统因此出现：保证每一个新符号都能兑换回米和秒（以及那个身份未定的千克刻度）。科学走的路，就是这样从可度量的东西，走向还不知道的规律。</p>
+
+  <div class="callout">
+    <b>方法四步。</b> ① 问清楚什么能测（这一章：s、t，外加秤上的读数）。② 写出量纲，派生量不许无中生有。③ 给数据一个最省的数学假设，代入，看它是否对所有测量都成立。④ 用另一组实验独立复核——例如换高度、换球。
+  </div>
+
+  <div class="callout tail">
+    <b>这一章留下的两条现象，就是第二章的入口。</b> 第一，斜面上加速度基本恒定——可加速度是怎么来的，还没有问。第二，这个恒定的加速度跟球在秤上有多重无关——质量和重量甚至还分不清。速度、加速度、位移、时间的关系已经闭合；「状态为什么会变」还是一个缺口。第二章要处理的，正是加速度从哪儿来。引力、以及引力和加速度的关系，要再往后，到第三章。
+  </div>
+
+  <nav class="chapter-nav">
+    <span class="muted">没有上一章</span>
+    <a href="../index.html">返回物理目录</a>
+    <a href="02-force.html">下一章 · 力：加速度从哪里来</a>
+  </nav>
+</article>
+
+<footer class="site-foot">基础力学 · 第一章 · 测量先于力</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  }
+
+  var A = 2.40;
+  var pathS = document.getElementById("pathS");
+  var wRead = document.getElementById("wRead");
+  var sVal = document.getElementById("sVal");
+  var wVal = document.getElementById("wVal");
+  var hBall = document.getElementById("hBall");
+  var hBallEnd = document.getElementById("hBallEnd");
+  var hTag = document.getElementById("hTag");
+  var hHint = document.getElementById("hHint");
+  var trialBody = document.getElementById("trialBody");
+
+  function state(){
+    var s = Number(pathS.value) / 100;
+    var w = Number(wRead.value);
+    var t = Math.sqrt(2 * s / A);
+    var v = A * t;
+    return {s: s, w: w, t: t, v: v, a: v * v / (2 * s)};
+  }
+
+  function paint(){
+    var st = state();
+    sVal.textContent = st.s.toFixed(2) + " m";
+    wVal.textContent = st.w + " 格";
+    var frac = (st.s - 0.40) / 1.60;
+    var tAlong = 0.10 + (1 - frac) * 0.72;
+    var x0 = 20, y0 = 36, dx = 360, dy = 114;
+    var len = Math.sqrt(dx * dx + dy * dy);
+    var ux = dx / len, uy = dy / len;
+    var r = 8 + st.w * 0.7;
+    var px = x0 + tAlong * dx;
+    var py = y0 + tAlong * dy;
+    hBall.setAttribute("cx", String(px + r * uy));
+    hBall.setAttribute("cy", String(py - r * ux));
+    hBall.setAttribute("r", String(r));
+    hBallEnd.setAttribute("cx", "450");
+    hBallEnd.setAttribute("cy", String(150 - r));
+    hBallEnd.setAttribute("r", String(r));
+    hTag.textContent = "s = " + st.s.toFixed(2) + " m ，到底 v = " + st.v.toFixed(2) + " m/s";
+    hHint.textContent = "t = " + st.t.toFixed(2) + " s。用 a = v²/(2s) 得到 " + st.a.toFixed(2) + " m/s²。改秤上的读数，这个 a 不动。";
+  }
+
+  function addRow(){
+    var empty = document.getElementById("trialEmpty");
+    if (empty) empty.remove();
+    var st = state();
+    var tr = document.createElement("tr");
+    [st.s.toFixed(2), String(st.w), st.t.toFixed(2), st.v.toFixed(2), st.a.toFixed(2)].forEach(function(text, i){
+      var td = document.createElement("td");
+      td.textContent = text;
+      if (i === 4) td.className = "same";
+      tr.appendChild(td);
+    });
+    trialBody.appendChild(tr);
+  }
+
+  pathS.addEventListener("input", paint);
+  pathS.addEventListener("change", paint);
+  wRead.addEventListener("input", paint);
+  wRead.addEventListener("change", paint);
+  document.getElementById("recordBtn").addEventListener("click", addRow);
+  document.getElementById("clearBtn").addEventListener("click", function(){
+    trialBody.innerHTML = '<tr id="trialEmpty"><td colspan="5">把球放到不同高度，点「记下这一趟」。各行最后一列应几乎相同。</td></tr>';
+  });
+  paint();
+});
+</script>
+</body>
+</html>
