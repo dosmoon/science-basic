@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
@@ -26,27 +25,59 @@
 <main class="page">
   <p class="crumb"><a href="../index.html">首页</a> / 计算机</p>
   <h1>计算机基础</h1>
-  <p class="deck">这一部分准备讲三件事：计算机怎样运行的最简模型，编程的基本知识，以及神经网络。第一章先用图灵机把「计算」说清楚。</p>
+  <p class="deck">面向剑桥 AS 程度的读者。和学校课本的差别在于排布：课本按硬件、算法分块；这里按人类计算工具出现的先后。先有算盘，后有齿轮，再有分析机，图灵机要到第四章。</p>
   <article class="card">
     <span class="pill">CHAPTER 01</span>
-    <h2>图灵机：计算的最简模型</h2>
-    <p>先看人在纸上怎样按规则计算，再写成图灵机。由此得到：人用确定规则能在纸上做完的事，计算机也能做。</p>
+    <h2>算盘：先表示，再按口诀加减</h2>
+    <p>中国用得最久的计算工具。用 152 + 763 看两件事：先把数拨出来，再一档一档加。加减是最基本的。</p>
     <ul class="list">
-      <li><a href="foundations/01-turing.html">阅读第一章</a></li>
+      <li><a href="foundations/01-abacus.html">阅读第一章</a></li>
     </ul>
   </article>
   <article class="card">
     <span class="pill">CHAPTER 02</span>
+    <h2>机械计算器：齿轮里的进位</h2>
+    <p>算盘的口诀还在人心里。帕斯卡、莱布尼茨把进位做进齿轮。正文待写。</p>
+    <ul class="list">
+      <li><a href="foundations/02-mechanical.html">阅读提纲</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <span class="pill">CHAPTER 03</span>
+    <h2>分析机：同一台机器，不同的手续</h2>
+    <p>雅卡尔的卡片，巴贝奇的分析机。机器固定，手续可以换。正文待写。</p>
+    <ul class="list">
+      <li><a href="foundations/03-analytical.html">阅读提纲</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <span class="pill">CHAPTER 04</span>
+    <h2>图灵机：计算的最简模型</h2>
+    <p>前面三种工具都按规则改配置。图灵机问：这些手续共同的最简模型是什么，边界在哪里。</p>
+    <ul class="list">
+      <li><a href="foundations/04-turing.html">阅读第四章</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <span class="pill">CHAPTER 05</span>
+    <h2>电子计算机：把通用机做成装置</h2>
+    <p>存储程序：程序和数据放在同一种存储器里。正文待写。</p>
+    <ul class="list">
+      <li><a href="foundations/05-electronic.html">阅读提纲</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <span class="pill">CHAPTER 06</span>
     <h2>程序：人写得动的规则</h2>
-    <p>规则表很快会大到无法手写。程序语言用来写出图灵机的规则。正文下一章再写。</p>
+    <p>转移表很快会大到无法手写。程序语言是给规则表的一层人话。</p>
     <ul class="list">
       <li class="soon">即将到来</li>
     </ul>
   </article>
   <article class="card">
-    <span class="pill">CHAPTER 03</span>
+    <span class="pill">CHAPTER 07</span>
     <h2>神经网络：可计算的学习机器</h2>
-    <p>先确认计算的范围，再问：一层层算术组合怎样从例子里得到规则。正文更后再写。</p>
+    <p>仍在可计算范围之内。一层层算术怎样从例子里得到规则。</p>
     <ul class="list">
       <li class="soon">即将到来</li>
     </ul>
