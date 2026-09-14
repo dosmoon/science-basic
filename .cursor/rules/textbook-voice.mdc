@@ -1,0 +1,6 @@
+---
+description: 章节正文遵守仓库根目录 AGENTS.md（各 AI 共用的教材写法）
+alwaysApply: true
+---
+
+写或改本仓库的教材章节时，遵守根目录 `AGENTS.md`。那是给所有 AI 看的同一份写法，不要只用 Cursor 规则另写一套。范文：`physics/mechanics/01-measurement.html`。
