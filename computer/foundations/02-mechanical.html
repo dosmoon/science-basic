@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第二章 · 机械计算器（待展开）</title>
+<title>第二章 · 计算工具简史</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <link rel="stylesheet" href="../../assets/css/site.css">
 </head>
 <body>
@@ -27,32 +26,143 @@
   <p class="crumb"><a href="../../index.html">首页</a> / <a href="../index.html">计算机</a> / 计算机基础</p>
   <p class="kicker">计算机基础 · 第二章</p>
   <header>
-    <h1>机械计算器：齿轮里的进位</h1>
-    <p class="deck">正文还没有写。第二章要说明：算盘的进位由人记住；机械计算器把进位做成齿轮。</p>
+    <h1>计算工具简史</h1>
+    <p class="deck">本章从刻痕开始，由浅入深。先看人怎样保存数量，再看算筹、算盘和纸笔怎样帮助运算，最后看到十七世纪的机械计算器。十八、十九世纪以后，工具的结构迅速变复杂，第三章再展开。</p>
     <div class="hr"></div>
   </header>
 
-  <p>第一章已经说明：\(152+763\) 是一档一档改珠子，进位由人记住。十七世纪的机械计算器要把「满十进一」做成齿轮啮合。加减规则不变，执行步骤的不再只是手指。</p>
+  <h2>一、先保存数量：手指、石子和刻痕</h2>
+  <p>最早的计算不需要专门机器。数目很小时，人可以用手指计数，也可以让一颗石子对应一件物品。要把数量留到以后，就在木头、骨头或泥板上留下记号。</p>
+  <p>这些办法主要解决第一章的两个问题：一一对应给出数的表示，实物和刻痕保存记录。它们适合计数，却不适合很大的数，也没有把加减步骤固定下来。</p>
 
-  <div class="callout">
-    <b>预定要处理的事情。</b>
-    <ul>
-      <li>纳皮尔的骨头、计算尺：乘除怎样被化成更机械的步骤。</li>
-      <li>帕斯卡加法器（1642）：齿轮怎样进位。</li>
-      <li>莱布尼茨步进计算器：乘除怎样变成反复的加减。</li>
-      <li>和算盘的对照：表示还在，口诀开始迁进机器；人仍要摇曲柄、读结果。</li>
-    </ul>
+  <figure class="diagram" aria-label="从实物对应到书写数字">
+    <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="170" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif">
+        <rect x="30" y="44" width="150" height="70" rx="10" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="105" y="72" text-anchor="middle" font-size="16" fill="#1d2630">手指、石子</text>
+        <text x="105" y="96" text-anchor="middle" font-size="12" fill="#5b6470">一件对应一个</text>
+        <rect x="210" y="44" width="150" height="70" rx="10" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="285" y="72" text-anchor="middle" font-size="16" fill="#1d2630">刻痕</text>
+        <text x="285" y="96" text-anchor="middle" font-size="12" fill="#5b6470">把数量留下</text>
+        <rect x="390" y="44" width="150" height="70" rx="10" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="465" y="72" text-anchor="middle" font-size="16" fill="#1d2630">位值记数</text>
+        <text x="465" y="96" text-anchor="middle" font-size="12" fill="#5b6470">少量记号写大数</text>
+        <rect x="570" y="44" width="120" height="70" rx="10" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="630" y="72" text-anchor="middle" font-size="16" fill="#1d2630">运算工具</text>
+        <text x="630" y="96" text-anchor="middle" font-size="12" fill="#5b6470">帮助执行步骤</text>
+      </g>
+      <path d="M180 79 h30 M360 79 h30 M540 79 h30" stroke="#1d2630" stroke-width="1.4"/>
+      <text x="360" y="148" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">后来的工具并非只表示更多数，也逐步承担记录和运算。</text>
+    </svg>
+    <figcaption><span class="n">图 2-1</span>计算工具先帮助保存数量，后来才逐步帮助执行运算。</figcaption>
+  </figure>
+
+  <h2>二、可以摆动的数字：算筹</h2>
+  <p>中国古代用算筹计算。算筹是短小的棍，按行列摆在平面上。所在位置决定个、十、百、千，筹的排列表示这一位的数字。战国至汉代的材料已经能看到这种计算传统。</p>
+  <p>算筹既表示数，也提供计算场地。计算者移动筹的位置，完成加、减、乘、除，还能处理分数和方程。纸上只需抄下题目和结果，中间步骤可以直接在筹算板上进行。</p>
+  <p>算筹容易携带，但桌面受到碰撞，排列就可能改变。数位较多时，摆放和收取也花时间。</p>
+
+  <h2>三、把计数物固定起来：算盘</h2>
+  <p>算盘把珠子穿在杆上，再用横梁分出不同的值。每一档对应一个数位。珠子不会散开，当前的数可以直接保存在盘上。</p>
+  <p>中国算盘在明代已经广泛使用。计算者先把数拨到盘上，再按口诀移动珠子。表示和记录由算盘承担，运算步骤仍由人记住并执行。</p>
+
+  <figure class="diagram" aria-label="算筹与算盘的比较">
+    <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="200" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif" font-size="13">
+        <text x="70" y="34" fill="#5b6470">工具</text>
+        <text x="260" y="34" text-anchor="middle" fill="#1d2630">表示</text>
+        <text x="440" y="34" text-anchor="middle" fill="#1d2630">记录</text>
+        <text x="620" y="34" text-anchor="middle" fill="#1d2630">运算</text>
+        <text x="70" y="90" fill="#1d2630">算筹</text>
+        <rect x="170" y="60" width="180" height="46" rx="8" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="260" y="88" text-anchor="middle" fill="#1d2630">筹的排列与位置</text>
+        <rect x="370" y="60" width="140" height="46" rx="8" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="440" y="88" text-anchor="middle" fill="#1d2630">桌面排列</text>
+        <rect x="530" y="60" width="160" height="46" rx="8" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="610" y="88" text-anchor="middle" fill="#1d2630">人移动算筹</text>
+        <text x="70" y="154" fill="#1d2630">算盘</text>
+        <rect x="170" y="124" width="180" height="46" rx="8" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="260" y="152" text-anchor="middle" fill="#1d2630">珠子与档位</text>
+        <rect x="370" y="124" width="140" height="46" rx="8" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="440" y="152" text-anchor="middle" fill="#1d2630">珠子的位置</text>
+        <rect x="530" y="124" width="160" height="46" rx="8" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="610" y="152" text-anchor="middle" fill="#1d2630">人按口诀拨珠</text>
+      </g>
+    </svg>
+    <figcaption><span class="n">图 2-2</span>算盘把珠子固定在档上，记录更稳定；运算仍由人执行。</figcaption>
+  </figure>
+
+  <h2>四、纸笔计算成为通用方法</h2>
+  <p>今天常用的十进制数字形成于印度，后来经伊斯兰世界传到欧洲。零和位值记数法使大数可以紧凑地写在纸上。1202 年，斐波那契的《计算之书》介绍了这种记数法及其商业计算方法。</p>
+  <p>纸笔竖式不需要专门装置。同一张纸可以做加减乘除，也可以保存题目、步骤和结果。工具很简单，关键是把算法写成固定的书面步骤。</p>
+  <p>纸笔没有取代算盘。不同地区、行业和时代长期同时使用多种工具。选择哪一种，取决于成本、速度、是否便携，以及结果是否容易检查。</p>
+
+  <h2>五、把困难运算改写：对数、纳皮尔筹和计算尺</h2>
+  <p>天文、航海和测量常要处理多位数乘除。1614 年，纳皮尔发表对数方法，把乘法转成加法，把除法转成减法。1617 年出版的纳皮尔筹，则把乘法表预先写在一组小棒上，计算者按位置读取部分积。</p>
+  <p>十七世纪二十年代出现的计算尺利用对数刻度。移动两根刻度尺，就能用长度的相加完成乘除。它给出的是近似值，因此适合工程计算，不适合需要每一位都准确的账目。</p>
+  <p>这两类工具没有自动做完所有步骤。它们先把困难运算改写成较容易执行的步骤，从而减少人的工作量。</p>
+
+  <h2>六、让机构执行进位：机械计算器</h2>
+  <p>1642 年，帕斯卡开始制造齿轮加法器。每一只轮表示一个十进制数位；一只轮从 9 回到 0 时，机构推动左边一轮。这把「满十进一」的一部分交给了机器。</p>
+  <p>莱布尼茨后来设计步进计算器，并在 1673 年公开演示。它试图用重复的加减完成乘除。机器可以执行更多步骤，但人仍要输入数字、转动机构并读出结果。</p>
+
+  <table class="data-table rules" aria-label="十七世纪以前的重要计算工具">
+    <thead>
+      <tr><th>工具</th><th>主要改进</th><th>仍由人完成</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>刻痕</td><td>把数量保存下来</td><td>解释记号、逐个计数</td></tr>
+      <tr><td>算筹</td><td>在平面上表示并改变数</td><td>记住并执行算法</td></tr>
+      <tr><td>算盘</td><td>稳定保存各数位</td><td>按口诀拨珠</td></tr>
+      <tr><td>纸笔竖式</td><td>统一保存题目、步骤和结果</td><td>逐步书写</td></tr>
+      <tr><td>计算尺</td><td>把乘除转成刻度长度的相加减</td><td>对准刻度、估读结果</td></tr>
+      <tr><td>齿轮计算器</td><td>机构执行进位和部分重复步骤</td><td>输入、驱动、读数</td></tr>
+    </tbody>
+  </table>
+
+  <h2>七、十八世纪以后：先看路线</h2>
+  <p>十八、十九世纪以后，问题不再只是让加法更快。人们开始要求机器自动重复许多步骤，还希望同一台机器能更换任务。结构因此迅速变复杂。本章先列出后面的路线。</p>
+  <ol>
+    <li><strong>自动控制。</strong>穿孔卡片保存一连串选择，机器按卡片依次动作。</li>
+    <li><strong>通用计算。</strong>巴贝奇的分析机把保存数字的部分与执行运算的部分分开。</li>
+    <li><strong>计算模型。</strong>图灵在 1936 年说明按确定规则计算最少需要哪些部件。</li>
+    <li><strong>电子计算机。</strong>二十世纪四十年代，电子元件提高了运算和控制速度。</li>
+    <li><strong>程序与学习。</strong>程序把规则写成机器可执行的形式；神经网络则从数据中调整大量参数。</li>
+  </ol>
+
+  <figure class="diagram" aria-label="计算工具从古代到现代的路线">
+    <svg viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="160" fill="#FBF8F1"/>
+      <line x1="54" y1="82" x2="676" y2="82" stroke="#1d2630" stroke-width="2"/>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#1d2630">
+        <circle cx="70" cy="82" r="7" fill="#1a5fa3"/><text x="70" y="54" text-anchor="middle">刻痕</text>
+        <circle cx="170" cy="82" r="7" fill="#1a5fa3"/><text x="170" y="112" text-anchor="middle">算筹、算盘</text>
+        <circle cx="285" cy="82" r="7" fill="#1a5fa3"/><text x="285" y="54" text-anchor="middle">纸笔、对数</text>
+        <circle cx="400" cy="82" r="7" fill="#b8862a"/><text x="400" y="112" text-anchor="middle">机械计算器</text>
+        <circle cx="515" cy="82" r="7" fill="#bf4a22"/><text x="515" y="54" text-anchor="middle">通用机器</text>
+        <circle cx="650" cy="82" r="7" fill="#bf4a22"/><text x="650" y="112" text-anchor="middle">电子计算机与程序</text>
+      </g>
+      <text x="360" y="145" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">本章讲到十七世纪；右侧较复杂的工具从第三章开始逐章展开。</text>
+    </svg>
+    <figcaption><span class="n">图 2-3</span>工具逐步承担更多工作：先保存数，再帮助运算，最后保存并执行一整套规则。</figcaption>
+  </figure>
+
+  <h2>八、本章小结</h2>
+  <p>刻痕保存数量，算筹和算盘提供可改变的记录，纸笔把算法写成通用步骤，对数和计算尺改写困难运算，齿轮计算器开始自动执行进位。沿着这条路线，工具承担的工作越来越多。</p>
+
+  <div class="callout tail">
+    <b>下一章要解决的问题。</b>齿轮计算器只能执行预先做进机构里的运算。怎样让机器自动完成一长串步骤，并且换一套步骤就能做另一项工作？
   </div>
 
-  <p>第一章若结构要改，这一章的入口也会跟着改。所以此处只留提纲。</p>
-
   <nav class="chapter-nav">
-    <a href="01-abacus.html">上一章 · 算盘</a>
+    <a href="01-abacus.html">上一章 · 人怎样算数</a>
     <a href="../index.html">返回计算机目录</a>
-    <a href="03-analytical.html">下一章 · 分析机（提纲）</a>
+    <a href="03-analytical.html">下一章 · 从自动控制到分析机（提纲）</a>
   </nav>
 </article>
 
-<footer class="site-foot">计算机基础 · 第二章 · 占位</footer>
+<footer class="site-foot">计算机基础 · 第二章 · 计算工具简史</footer>
 </body>
 </html>

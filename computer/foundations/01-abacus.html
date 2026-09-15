@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第一章 · 算盘：先表示，再按口诀加减</title>
+<title>第一章 · 人怎样算数</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -27,198 +27,119 @@
   <p class="crumb"><a href="../../index.html">首页</a> / <a href="../index.html">计算机</a> / 计算机基础</p>
   <p class="kicker">计算机基础 · 第一章</p>
   <header>
-    <h1>算盘：先表示，再按口诀加减</h1>
-    <p class="deck">本章从算盘开始，由浅入深。先学会把一个数拨在盘上，再计算 \(152+763\)：从个位向左，一档一档相加，记下进位。乘、除这一章还不引入。</p>
+    <h1>人怎样算数</h1>
+    <p class="deck">本章从 \(152+763\) 开始，由浅入深。先说明数怎样表示，再说明数和中间结果记在哪里，最后写出计算步骤。具体的计算工具要到第二章才依次介绍。</p>
     <div class="hr"></div>
   </header>
 
-  <h2>一、本章要算什么</h2>
-  <p>这一章要计算 \(152+763\)。使用的工具是算盘。中国长期用算盘做加减。这一章只讨论十进制的加和减。乘、除可以看成反复的加减，这一章还不引入。</p>
+  <h2>一、先提出一个计算问题</h2>
+  <p>仓库原有 152 袋米，又运来 763 袋。要知道现在共有多少袋，需要计算</p>
+  <div class="formula">\(152+763\)</div>
+  <p>这道题很短，但开始计算以前，三件事必须先确定。</p>
+  <ol>
+    <li><strong>表示。</strong>152 和 763 怎样写出来？每个记号表示多少？</li>
+    <li><strong>记录。</strong>这两个数、算式和中间结果放在哪里？</li>
+    <li><strong>运算。</strong>先算哪一位？满十怎么办？什么时候结束？</li>
+  </ol>
+  <p>这三件事合在一起，才构成一次可以完成的计算。</p>
 
-  <figure class="diagram" aria-label="本章要计算的竖式">
-    <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect width="720" height="200" fill="#FBF8F1"/>
-      <text x="200" y="36" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">纸上的竖式</text>
-      <text x="520" y="36" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">算盘上要做的两步</text>
-      <g font-family="JetBrains Mono, monospace" font-size="22" fill="#1d2630">
-        <text x="200" y="80" text-anchor="middle">152</text>
-        <text x="148" y="112">+</text>
-        <text x="200" y="112" text-anchor="middle">763</text>
-        <line x1="140" y1="124" x2="260" y2="124" stroke="#1d2630" stroke-width="2"/>
-        <text x="200" y="156" text-anchor="middle">？</text>
+  <figure class="diagram" aria-label="一次计算需要表示、记录和运算">
+    <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="190" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif">
+        <rect x="40" y="48" width="180" height="82" rx="12" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="130" y="80" text-anchor="middle" font-size="18" fill="#1d2630">表示</text>
+        <text x="130" y="106" text-anchor="middle" font-size="13" fill="#5b6470">152 怎样写</text>
+        <rect x="270" y="48" width="180" height="82" rx="12" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="360" y="80" text-anchor="middle" font-size="18" fill="#1d2630">记录</text>
+        <text x="360" y="106" text-anchor="middle" font-size="13" fill="#5b6470">数和中间结果放在哪里</text>
+        <rect x="500" y="48" width="180" height="82" rx="12" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="590" y="80" text-anchor="middle" font-size="18" fill="#1d2630">运算</text>
+        <text x="590" y="106" text-anchor="middle" font-size="13" fill="#5b6470">下一步按什么规则做</text>
       </g>
-      <g font-family="Public Sans, sans-serif" font-size="14">
-        <rect x="380" y="58" width="280" height="44" rx="8" fill="#e7f0f8" stroke="#1a5fa3"/>
-        <text x="520" y="86" text-anchor="middle" fill="#1d2630">① 先把 152 拨到盘上</text>
-        <rect x="380" y="116" width="280" height="44" rx="8" fill="#fff7e8" stroke="#b8862a"/>
-        <text x="520" y="144" text-anchor="middle" fill="#1d2630">② 再一档一档加上 763</text>
-      </g>
+      <path d="M220 89 h50 M450 89 h50" stroke="#1d2630" stroke-width="1.5"/>
+      <text x="360" y="164" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">先有可以辨认的数，再有保存它们的地方，最后才能逐步改变记录。</text>
     </svg>
-    <figcaption><span class="n">图 1-1</span>竖式给出要求和。算盘上先表示被加数，再按档相加。</figcaption>
+    <figcaption><span class="n">图 1-1</span>计算需要表示、记录和运算。三者回答三个不同的问题。</figcaption>
   </figure>
 
-  <h2>二、先把 152 表示出来</h2>
-  <p>计算以前，先要在算盘上把数拨出来。这叫做<strong>表示</strong>。要算 \(152+763\)，第一步是把 152 拨到盘上。</p>
-  <p>算盘分成一档一档，每一档对应一个数位。从右往左依次是：个、十、百、千。因此 152 表示成：百位 1，十位 5，个位 2；千位是 0，珠子全部离梁。</p>
-  <p>每一档怎样表示 0 到 9？梁上面有一颗上珠，当 5；梁下面有四颗下珠，每颗当 1。珠子拨向梁才计数，拨离梁就不计数。一档上的数是</p>
-  <div class="formula">\(5\times\)（靠梁的上珠颗数）\(+\)（靠梁的下珠颗数）</div>
-  <p>传统中国算盘是上二下五，一档可以大于 9，方便旧制斤两。十进制加减只需要 0 到 9。这一章用上一下四，每一档恰好表示十进制的一位。</p>
+  <h2>二、数怎样表示</h2>
+  <p>三袋米可以用三个刻痕表示：|||。数量很小时，这种办法够用。数量变大以后，逐个刻画会很慢，也不容易检查。</p>
+  <p>十进制只用十个数字 \(0,1,2,\ldots,9\)。同一个数字放在不同位置，数值不同。152 中的三个位置分别是百位、十位和个位：</p>
+  <div class="formula">\(152=1\times100+5\times10+2\times1\)</div>
+  <p>这叫做<strong>位值</strong>。从右向左，每一位是右边一位的十倍。有限的十个数字，配合不同的位置，就能表示任意大的整数。</p>
 
-  <figure class="diagram" aria-label="算盘一档的结构">
-    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect width="720" height="280" fill="#FBF8F1"/>
-      <rect x="70" y="28" width="90" height="220" rx="8" fill="#efe9da" stroke="#1d2630"/>
-      <line x1="115" y1="40" x2="115" y2="236" stroke="#1d2630" stroke-width="3"/>
-      <line x1="78" y1="108" x2="152" y2="108" stroke="#b8862a" stroke-width="8"/>
-      <circle cx="115" cy="68" r="14" fill="#bf4a22"/>
-      <circle cx="115" cy="142" r="14" fill="#1a5fa3"/>
-      <circle cx="115" cy="174" r="14" fill="#1a5fa3"/>
-      <circle cx="115" cy="206" r="14" fill="#cfc7b4"/>
-      <circle cx="115" cy="238" r="14" fill="#cfc7b4"/>
-      <text x="200" y="74" font-family="Public Sans, sans-serif" font-size="14" fill="#1d2630">上珠靠梁 = 5</text>
-      <text x="200" y="108" font-family="Public Sans, sans-serif" font-size="13" fill="#b8862a">梁</text>
-      <text x="200" y="154" font-family="Public Sans, sans-serif" font-size="14" fill="#1d2630">两颗下珠靠梁 = 2</text>
-      <text x="200" y="210" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">离梁的珠子不算</text>
-      <text x="430" y="80" font-family="Newsreader, serif" font-size="22" fill="#1d2630">这一档 = 7</text>
-      <text x="430" y="112" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">5 + 1 + 1</text>
-      <text x="430" y="150" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">上珠当 5，下珠每颗当 1。</text>
-      <text x="430" y="172" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">5 用一颗上珠表示，不必拨五颗下珠。</text>
-    </svg>
-    <figcaption><span class="n">图 1-2</span>一档只表示一位。靠梁才计数。5 用上珠，1 用下珠。</figcaption>
-  </figure>
-
-  <p>把 152 拨到盘上：个位两颗下珠，十位一颗上珠（表示 5），百位一颗下珠。千位珠子全部离梁，表示 0。这时盘上读出的数是 152，加法还没有开始。</p>
-
-  <figure class="diagram" aria-label="算盘上的 152">
-    <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect width="720" height="320" fill="#FBF8F1"/>
-      <rect x="72" y="20" width="576" height="268" rx="10" fill="#f7f1e4" stroke="#1d2630"/>
-      <line x1="72" y1="108" x2="648" y2="108" stroke="#b8862a" stroke-width="8"/>
-      <g stroke="#1d2630" stroke-width="3">
-        <line x1="156" y1="36" x2="156" y2="268"/>
-        <line x1="300" y1="36" x2="300" y2="268"/>
-        <line x1="444" y1="36" x2="444" y2="268"/>
-        <line x1="588" y1="36" x2="588" y2="268"/>
-      </g>
-      <g>
-        <circle cx="156" cy="58" r="13" fill="#e2b6a8"/>
-        <circle cx="156" cy="148" r="13" fill="#cfc7b4"/>
-        <circle cx="156" cy="176" r="13" fill="#cfc7b4"/>
-        <circle cx="156" cy="204" r="13" fill="#cfc7b4"/>
-        <circle cx="156" cy="232" r="13" fill="#cfc7b4"/>
-        <circle cx="300" cy="58" r="13" fill="#e2b6a8"/>
-        <circle cx="300" cy="148" r="13" fill="#1a5fa3"/>
-        <circle cx="300" cy="176" r="13" fill="#cfc7b4"/>
-        <circle cx="300" cy="204" r="13" fill="#cfc7b4"/>
-        <circle cx="300" cy="232" r="13" fill="#cfc7b4"/>
-        <circle cx="444" cy="88" r="13" fill="#bf4a22"/>
-        <circle cx="444" cy="176" r="13" fill="#cfc7b4"/>
-        <circle cx="444" cy="204" r="13" fill="#cfc7b4"/>
-        <circle cx="444" cy="232" r="13" fill="#cfc7b4"/>
-        <circle cx="444" cy="260" r="13" fill="#cfc7b4"/>
-        <circle cx="588" cy="58" r="13" fill="#e2b6a8"/>
-        <circle cx="588" cy="148" r="13" fill="#1a5fa3"/>
-        <circle cx="588" cy="176" r="13" fill="#1a5fa3"/>
-        <circle cx="588" cy="204" r="13" fill="#cfc7b4"/>
-        <circle cx="588" cy="232" r="13" fill="#cfc7b4"/>
-      </g>
-      <g font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">
-        <text x="156" y="300" text-anchor="middle">千 · 0</text>
-        <text x="300" y="300" text-anchor="middle">百 · 1</text>
-        <text x="444" y="300" text-anchor="middle">十 · 5</text>
-        <text x="588" y="300" text-anchor="middle">个 · 2</text>
-      </g>
-    </svg>
-    <figcaption><span class="n">图 1-3</span>152 拨在四档上：百位 1，十位 5（一颗上珠），个位 2。千位全离梁，表示 0。</figcaption>
-  </figure>
-
-  <h2>三、加法：一档一档，加上进位</h2>
-  <p>152 拨好以后，再加 763。步骤和纸上的竖式相同。从个位开始，向左逐档计算。每一档要加上三个量：本档原来的数、加数这一位、从右边传来的进位（0 或 1）。</p>
-  <p>个位：\(2+3=5\)。5 用一颗上珠表示，下珠全部离梁。本档变成 5，不进位。</p>
-  <p>十位：\(5+6=11\)。一档只能留下 0 到 9，所以本档留下 1，向百位进 1。</p>
-  <p>百位：1 + 7，再加上进位 1，得 9。9 用一颗上珠加四颗下珠表示。千位仍是 0。</p>
-  <p>盘上读出 915，与竖式结果相同。每一步只处理当前这一档，以及进位 0 或 1。</p>
-
-  <table class="data-table rules">
+  <table class="data-table rules" aria-label="152 和 763 的位值">
     <thead>
-      <tr><th>档</th><th>原来</th><th>加上</th><th>进位来</th><th>本档留下</th><th>向左进</th></tr>
+      <tr><th>数</th><th>百位</th><th>十位</th><th>个位</th><th>展开</th></tr>
     </thead>
     <tbody>
-      <tr><td>个</td><td>2</td><td>3</td><td>0</td><td>5</td><td>0</td></tr>
-      <tr><td>十</td><td>5</td><td>6</td><td>0</td><td>1</td><td>1</td></tr>
-      <tr><td>百</td><td>1</td><td>7</td><td>1</td><td>9</td><td>0</td></tr>
-      <tr><td>千</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>152</td><td>1</td><td>5</td><td>2</td><td>\(1\times100+5\times10+2\)</td></tr>
+      <tr><td>763</td><td>7</td><td>6</td><td>3</td><td>\(7\times100+6\times10+3\)</td></tr>
     </tbody>
   </table>
 
-  <div class="panel" id="abacusPanel">
-    <h3>拨珠实验：152 + 763</h3>
-    <div class="tm-bar">
-      <label>被加数
-        <input id="abA" type="text" value="152" inputmode="numeric" autocomplete="off">
-      </label>
-      <label>加数
-        <input id="abB" type="text" value="763" inputmode="numeric" autocomplete="off">
-      </label>
-      <button type="button" id="abPlace">拨上被加数</button>
-      <button type="button" id="abStep">加一步</button>
-      <button type="button" class="ghost" id="abReset">复位</button>
-      <span class="readout" id="abInfo"></span>
-    </div>
-    <p class="abacus-num" id="abNum">0000</p>
-    <svg id="abacusSvg" viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="四档算盘"></svg>
-    <p class="abacus-step" id="abMsg">先拨上 152，再从个位开始加 763。每一步只改一档。</p>
-    <p class="hint">可以换成别的两位数或三位数。这一章只用千、百、十、个四档，结果不超过 9999。</p>
-  </div>
+  <p>数字是一套表示规则。把 152 写在纸上、用算筹摆出来，或在算盘上拨出来，具体记号不同，但都必须让人读回同一个数。</p>
 
-  <h2>四、减法</h2>
-  <p>减法从个位向左做。本档不够减时，向左边借 1，当作 10 再减。例如 \(915-763\)，逐步拨回去，得到 152。</p>
-  <p>乘、除这一章不讲。它们是把加减重复多次，口诀更长。</p>
-  <p>这一章后面一直要用的，是下面三条：</p>
-  <ol>
-    <li>计算以前，先把数表示成盘上的珠子位置。</li>
-    <li>运算按确定的口诀进行，一次只改当前这一档。</li>
-    <li>档与档之间，只需要记住进位（或借位）是 0 还是 1。</li>
-  </ol>
-  <p>口诀相同，任何人拨完都得到同一个结果。快慢不影响结果。</p>
+  <h2>三、数和中间结果记在哪里</h2>
+  <p>只说出 152 和 763 还不够。计算时要同时看到两个数，还要保存进位和已经算出的各位。因此需要一块可以读写的地方。</p>
+  <p>这块地方可以是地面、纸、石板，也可以是算筹所在的位置或算盘珠子的状态。以后机器里的齿轮和电子存储器也做同一件事：保存计算当前进行到哪里。</p>
+  <p>用纸计算时，可以把数字按位对齐，列成竖式：</p>
 
-  <h2>五、更早的工具：算筹</h2>
-  <p>算盘之前，中国用算筹：小棍按个、十、百、千摆在桌上。正负可以用红筹、黑筹区分。算盘把珠子固定在档上，拨起来更快，也不容易碰乱。</p>
-  <p>两种工具都用十进制位值，都按口诀做加减。算术规则相同，改变的是记数的方式。</p>
-
-  <figure class="diagram" aria-label="算筹与算盘">
-    <svg viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect width="720" height="160" fill="#FBF8F1"/>
-      <rect x="40" y="36" width="280" height="88" rx="12" fill="#e7f0f8" stroke="#1a5fa3"/>
-      <text x="180" y="74" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">算筹</text>
-      <text x="180" y="98" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">小棍摆位 · 更早</text>
-      <text x="360" y="86" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="18" fill="#1d2630">→</text>
-      <rect x="400" y="36" width="280" height="88" rx="12" fill="#fff7e8" stroke="#b8862a"/>
-      <text x="540" y="74" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">算盘</text>
-      <text x="540" y="98" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">珠固定在档上 · 用得更久</text>
+  <figure class="diagram" aria-label="竖式中的输入、中间结果和输出">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="240" fill="#FBF8F1"/>
+      <g font-family="JetBrains Mono, monospace" font-size="24" fill="#1d2630">
+        <text x="300" y="54" text-anchor="middle" fill="#bf4a22">1</text>
+        <text x="260" y="92" text-anchor="middle">152</text>
+        <text x="200" y="130">+</text>
+        <text x="260" y="130" text-anchor="middle">763</text>
+        <line x1="190" y1="145" x2="330" y2="145" stroke="#1d2630" stroke-width="2"/>
+        <text x="260" y="186" text-anchor="middle">915</text>
+      </g>
+      <g font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">
+        <text x="410" y="56">进位写在百位上方</text>
+        <text x="410" y="96">两个输入按位对齐</text>
+        <text x="410" y="136">运算符说明要做加法</text>
+        <text x="410" y="184">横线下保存结果</text>
+      </g>
+      <path d="M320 51 h72 M330 91 h62 M330 127 h62 M330 179 h62" stroke="#cfc7b4" stroke-width="1.3"/>
     </svg>
-    <figcaption><span class="n">图 1-4</span>算筹更早，算盘把珠子固定在档上。两种工具都用十进制位值做加减。</figcaption>
+    <figcaption><span class="n">图 1-2</span>纸面既保存输入，也保存进位和结果。位置本身还说明各数字属于哪一位。</figcaption>
   </figure>
 
-  <h2>六、本章小结</h2>
-  <p>在算盘上计算，先要把数表示成各档珠子的位置，再按口诀从个位向左加或减。进位（或借位）是档与档之间唯一要记下的中间结果。加减是这一章的基本运算。</p>
+  <p>记录不只是最后的答案。计算中途的 1 也必须保存。若它丢失，后面的百位就会算错。</p>
+
+  <h2>四、按什么步骤计算</h2>
+  <p>表示和记录准备好以后，才开始运算。计算 \(152+763\) 时，使用下面的步骤。</p>
+  <ol>
+    <li>从个位开始：\(2+3=5\)，在个位写 5。</li>
+    <li>再算十位：\(5+6=11\)，在十位写 1，并向百位进 1。</li>
+    <li>最后算百位：\(1+7+1=9\)，在百位写 9。</li>
+    <li>没有更高的数位需要处理，计算结束，结果是 915。</li>
+  </ol>
+  <p>这里的每一步都规定了读什么、写什么、下一步去哪里。换一个人照着做，仍应得到 915。这种确定的计算步骤，后来叫做<strong>算法</strong>。</p>
+  <p>减法要规定借位，乘法和除法要规定更多步骤。具体规则不同，表示、记录、运算这三个问题仍然存在。</p>
+
+  <h2>五、本章小结</h2>
+  <p>人要算数，先要用记号表示数，再要有地方保存数、算式和中间结果，最后按确定步骤改变这些记录。十进制位值解决了大数的表示；纸面竖式提供了记录的位置；逐位相加和满十进一给出了运算步骤。</p>
 
   <div class="callout">
-    <b>方法。</b> ① 选定一个加法，例如 \(152+763\)。② 先把被加数拨到盘上。③ 从个位向左，每一档计算：本档原有的数 + 加数这一位 + 进位；留下 0 到 9，满十向左进 1。④ 用竖式核对结果。
+    <b>检查一种计算方法。</b>先问数怎样表示，再找输入和中间结果保存在哪里，最后把运算步骤逐条写出。三项都明确，这种方法才可以由别人重复执行。
   </div>
 
   <div class="callout tail">
-    <b>下一章要解决的问题。</b>算盘的口诀由人来记，珠子由人来拨。进位能不能由工具自己完成？第二章讲机械计算器。
+    <b>下一章要解决的问题。</b>刻痕、纸、算筹和算盘都能帮助人计算。人类还发明过哪些重要工具？它们分别改变了表示、记录或运算中的哪一部分？
   </div>
 
   <nav class="chapter-nav">
     <span class="muted">没有上一章</span>
     <a href="../index.html">返回计算机目录</a>
-    <a href="02-mechanical.html">下一章 · 机械计算器（提纲）</a>
+    <a href="02-mechanical.html">下一章 · 计算工具简史</a>
   </nav>
 </article>
 
-<footer class="site-foot">计算机基础 · 第一章 · 算盘</footer>
+<footer class="site-foot">计算机基础 · 第一章 · 人怎样算数</footer>
 
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
@@ -233,166 +154,6 @@ document.addEventListener("DOMContentLoaded", function(){
       ]
     });
   }
-
-  var LABELS = ["千", "百", "十", "个"];
-  var XS = [135, 285, 435, 585];
-  var H_OFF = 62, H_ON = 122;
-  var E_ON = [180, 212, 244, 276];
-  var E_OFF = [328, 356, 384, 412];
-  var svg = document.getElementById("abacusSvg");
-  var numEl = document.getElementById("abNum");
-  var msg = document.getElementById("abMsg");
-  var info = document.getElementById("abInfo");
-  var rods = [0, 0, 0, 0];
-  var carry = 0;
-  var addPos = 3;
-  var phase = "empty";
-  var placed = 0;
-  var addend = 0;
-
-  function build(){
-    var ns = "http://www.w3.org/2000/svg";
-    function el(name, attrs){
-      var n = document.createElementNS(ns, name);
-      Object.keys(attrs).forEach(function(k){ n.setAttribute(k, attrs[k]); });
-      return n;
-    }
-    svg.innerHTML = "";
-    svg.appendChild(el("rect", {width: "720", height: "460", fill: "#FBF8F1"}));
-    svg.appendChild(el("rect", {x: "48", y: "24", width: "624", height: "400", rx: "12", fill: "#f7f1e4", stroke: "#1d2630", "stroke-width": "1.6"}));
-    svg.appendChild(el("line", {x1: "48", y1: "144", x2: "672", y2: "144", stroke: "#b8862a", "stroke-width": "10"}));
-    XS.forEach(function(x, i){
-      var hi = el("rect", {id: "hi"+i, x: String(x-42), y: "32", width: "84", height: "384", rx: "8", fill: "transparent"});
-      svg.appendChild(hi);
-      svg.appendChild(el("line", {x1: String(x), y1: "40", x2: String(x), y2: "400", stroke: "#1d2630", "stroke-width": "3"}));
-      svg.appendChild(el("circle", {id: "h"+i, cx: String(x), cy: String(H_OFF), r: "15", fill: "#bf4a22"}));
-      for (var b = 0; b < 4; b++) {
-        svg.appendChild(el("circle", {id: "e"+i+"_"+b, cx: String(x), cy: String(E_OFF[b]), r: "14", fill: "#1a5fa3"}));
-      }
-      var t = el("text", {x: String(x), y: "448", "text-anchor": "middle", "font-family": "Public Sans, sans-serif", "font-size": "13", fill: "#5b6470"});
-      t.textContent = LABELS[i];
-      svg.appendChild(t);
-    });
-  }
-
-  function toDigits(n){
-    return [
-      Math.floor(n / 1000) % 10,
-      Math.floor(n / 100) % 10,
-      Math.floor(n / 10) % 10,
-      n % 10
-    ];
-  }
-
-  function valueOf(){
-    return rods[0]*1000 + rods[1]*100 + rods[2]*10 + rods[3];
-  }
-
-  function paint(){
-    rods.forEach(function(d, i){
-      var heaven = d >= 5;
-      var earth = heaven ? d - 5 : d;
-      document.getElementById("h"+i).setAttribute("cy", String(heaven ? H_ON : H_OFF));
-      for (var b = 0; b < 4; b++) {
-        var on = b < earth;
-        var c = document.getElementById("e"+i+"_"+b);
-        c.setAttribute("cy", String(on ? E_ON[b] : E_OFF[b]));
-        c.setAttribute("fill", on ? "#1a5fa3" : "#cfc7b4");
-      }
-      document.getElementById("h"+i).setAttribute("fill", heaven ? "#bf4a22" : "#e2b6a8");
-      var hi = document.getElementById("hi"+i);
-      var active = phase === "adding" && i === addPos;
-      hi.setAttribute("fill", active ? "rgba(26,95,163,.08)" : "transparent");
-    });
-    numEl.textContent = String(valueOf()).padStart(4, "0");
-    info.textContent = phase === "adding"
-      ? ("进位 " + carry + " · 下一档 " + LABELS[addPos])
-      : (phase === "done" ? "加完" : (phase === "placed" ? "已拨上，待加" : "未开始加"));
-  }
-
-  function parseNum(el, label){
-    var raw = el.value.trim();
-    if (!/^\d+$/.test(raw)) {
-      msg.textContent = label + "请写成不超过四位的整数。";
-      return null;
-    }
-    var n = Number(raw);
-    if (n > 9999) {
-      msg.textContent = "这一章只用四档，请用 0 到 9999。";
-      return null;
-    }
-    return n;
-  }
-
-  function place(){
-    var a = parseNum(document.getElementById("abA"), "被加数");
-    if (a == null) return;
-    placed = a;
-    rods = toDigits(a);
-    addend = 0;
-    carry = 0;
-    addPos = 3;
-    phase = "placed";
-    msg.textContent = a + " 已经在盘上。下一步从个位开始加。";
-    paint();
-  }
-
-  function step(){
-    if (phase === "empty") {
-      place();
-      return;
-    }
-    if (phase === "done") return;
-    if (phase === "placed") {
-      var b = parseNum(document.getElementById("abB"), "加数");
-      if (b == null) return;
-      addend = b;
-      carry = 0;
-      addPos = 3;
-      phase = "adding";
-    }
-    var bd = toDigits(addend);
-    var i = addPos;
-    var before = rods[i];
-    var sum = rods[i] + bd[i] + carry;
-    var newCarry = Math.floor(sum / 10);
-    var keep = sum % 10;
-    if (i === 0 && newCarry) {
-      msg.textContent = "四档满了，和超过 9999。换一对小一点的数。";
-      phase = "done";
-      paint();
-      return;
-    }
-    rods[i] = keep;
-    var spoken = LABELS[i] + "位：原来 " + before + "，加上 " + bd[i] + (carry ? "，再加进位 " + carry : "") + "，得 " + sum + "。本档留下 " + keep + (newCarry ? "，向左进 1。" : "，不进位。");
-    carry = newCarry;
-    addPos -= 1;
-    if (addPos < 0) {
-      phase = "done";
-      spoken += " 盘上现在是 " + valueOf() + "。";
-    }
-    msg.textContent = spoken;
-    paint();
-  }
-
-  function reset(){
-    document.getElementById("abA").value = "152";
-    document.getElementById("abB").value = "763";
-    rods = [0, 0, 0, 0];
-    carry = 0;
-    addPos = 3;
-    phase = "empty";
-    placed = 0;
-    addend = 0;
-    msg.textContent = "先拨上 152，再从个位开始加 763。每一步只改一档。";
-    paint();
-  }
-
-  build();
-  document.getElementById("abPlace").addEventListener("click", place);
-  document.getElementById("abStep").addEventListener("click", step);
-  document.getElementById("abReset").addEventListener("click", reset);
-  reset();
 });
 </script>
 </body>
