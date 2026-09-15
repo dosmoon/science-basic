@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第三章 · 从自动控制到分析机（待展开）</title>
+<title>第三章 · 自动控制、差分机与分析机</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -27,25 +27,458 @@
   <p class="crumb"><a href="../../index.html">首页</a> / <a href="../index.html">计算机</a> / 计算机基础</p>
   <p class="kicker">计算机基础 · 第三章</p>
   <header>
-    <h1>从自动控制到分析机</h1>
-    <p class="deck">正文还没有写。本章从十八、十九世纪的新问题开始，由浅入深。先看机器怎样自动执行一串动作，再看分析机怎样把数字、运算和控制分开。电子计算机要到第五章才引入。</p>
+    <h1>自动控制、差分机与分析机</h1>
+    <p class="deck">本章从自动执行一串动作开始，由浅入深。先看穿孔卡片怎样控制织机，再用平方表说明差分机为什么只做加法也能造表，最后跟随一项具体计算走过分析机的卡片、仓库和磨坊。图灵机要到第四章才引入。</p>
     <div class="hr"></div>
   </header>
 
-  <p>第二章概览了从刻痕到齿轮计算器的路线。十七世纪的机械计算器能自动进位，但执行的运算由机构预先决定。十八、十九世纪以后，人们开始让机器自动完成一串动作，并尝试把要执行的步骤放到机器外面。下一步是自动控制、穿孔卡片，以及巴贝奇的差分机和分析机。</p>
+  <h2>一、怎样让机器自动做下一步</h2>
+  <p>十七世纪的齿轮计算器能自动进位，但人仍要决定下一步：输入哪个数，做加法还是乘法，何时停止。要让机器连续工作，还要把动作的先后次序记录下来。</p>
+  <p>十八世纪的钟表、音乐盒和自动机常用带凸起的圆筒。圆筒每转到一个位置，凸起就推动一根杆。圆筒的表面同时记录了两件事：哪一时刻动作，哪一根杆动作。</p>
+  <p>这种圆筒能自动重复一段固定动作。要换动作，就要重新排列凸起，甚至另做圆筒。更方便的办法，是把每一步放在一张可以更换的卡片上。</p>
+
+  <figure class="diagram" aria-label="固定凸轮与可更换卡片的比较">
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="250" fill="#FBF8F1"/>
+      <text x="185" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">固定在机构上的次序</text>
+      <text x="535" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">放在机器外的次序</text>
+      <line x1="360" y1="18" x2="360" y2="226" stroke="#d9d2c2"/>
+      <g transform="translate(185 120)">
+        <circle cx="0" cy="0" r="66" fill="#efe9da" stroke="#1d2630" stroke-width="2"/>
+        <circle cx="0" cy="0" r="12" fill="#fff" stroke="#1d2630"/>
+        <rect x="-9" y="-80" width="18" height="24" rx="3" fill="#bf4a22"/>
+        <rect x="48" y="-52" width="20" height="24" rx="3" transform="rotate(45 58 -40)" fill="#bf4a22"/>
+        <rect x="-72" y="25" width="20" height="24" rx="3" transform="rotate(-65 -62 37)" fill="#bf4a22"/>
+        <path d="M0 -90 v-32 h70" fill="none" stroke="#1a5fa3" stroke-width="3"/>
+        <circle cx="72" cy="-122" r="7" fill="#1a5fa3"/>
+      </g>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <text x="185" y="218" text-anchor="middle">凸起转到杆下 → 推动一次</text>
+        <rect x="420" y="56" width="230" height="36" rx="6" fill="#fff" stroke="#1a5fa3"/>
+        <circle cx="460" cy="74" r="6" fill="#FBF8F1" stroke="#1a5fa3"/>
+        <circle cx="510" cy="74" r="6" fill="#1a5fa3"/>
+        <circle cx="560" cy="74" r="6" fill="#FBF8F1" stroke="#1a5fa3"/>
+        <circle cx="610" cy="74" r="6" fill="#1a5fa3"/>
+        <rect x="420" y="104" width="230" height="36" rx="6" fill="#fff" stroke="#1a5fa3"/>
+        <circle cx="460" cy="122" r="6" fill="#1a5fa3"/>
+        <circle cx="510" cy="122" r="6" fill="#FBF8F1" stroke="#1a5fa3"/>
+        <circle cx="560" cy="122" r="6" fill="#1a5fa3"/>
+        <circle cx="610" cy="122" r="6" fill="#FBF8F1" stroke="#1a5fa3"/>
+        <rect x="420" y="152" width="230" height="36" rx="6" fill="#fff" stroke="#1a5fa3"/>
+        <circle cx="460" cy="170" r="6" fill="#1a5fa3"/>
+        <circle cx="510" cy="170" r="6" fill="#1a5fa3"/>
+        <circle cx="560" cy="170" r="6" fill="#FBF8F1" stroke="#1a5fa3"/>
+        <circle cx="610" cy="170" r="6" fill="#FBF8F1" stroke="#1a5fa3"/>
+        <text x="535" y="218" text-anchor="middle">换一串卡片 → 换一串动作</text>
+      </g>
+    </svg>
+    <figcaption><span class="n">图 3-1</span>圆筒把动作次序固定在机器里；卡片把次序移到机器外，因而更容易更换。</figcaption>
+  </figure>
+
+  <h2>二、雅卡尔织机怎样读一张卡片</h2>
+  <p>织布时，经线沿布的长度方向排列，梭子带着纬线横向穿过。要织出花纹，每穿一次纬线，都要选择一部分经线抬起，另一部分留在下面。</p>
+  <p>1801 年，法国人约瑟夫·马里·雅卡尔展示了改进的提花装置；1804—1805 年的版本使用首尾相接的穿孔卡片。每张卡片对应一次选线。卡片上的每一个位置对应一组经线。</p>
+  <ol>
+    <li>卡片被压向一排横针。</li>
+    <li>有孔的位置让横针穿过，相关竖钩留在提升刀下面。</li>
+    <li>没有孔的位置把横针推回，竖钩随之偏开。</li>
+    <li>提升刀上升时，只带起仍与它接合的竖钩和经线。</li>
+    <li>梭子穿过；随后换到下一张卡片，选择下一排经线。</li>
+  </ol>
+
+  <figure class="diagram" aria-label="雅卡尔装置读取穿孔卡片的原理">
+    <svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="330" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif">
+        <text x="190" y="28" text-anchor="middle" font-size="15" fill="#1d2630">有孔：针穿过，钩被提起</text>
+        <text x="530" y="28" text-anchor="middle" font-size="15" fill="#1d2630">无孔：针后退，钩被推开</text>
+      </g>
+      <line x1="360" y1="18" x2="360" y2="310" stroke="#d9d2c2"/>
+      <g>
+        <rect x="64" y="62" width="54" height="150" rx="5" fill="#efe9da" stroke="#b8862a" stroke-width="2"/>
+        <circle cx="91" cy="112" r="9" fill="#FBF8F1" stroke="#b8862a"/>
+        <line x1="30" y1="112" x2="235" y2="112" stroke="#1a5fa3" stroke-width="4"/>
+        <path d="M235 112 v-42 h42 v118" fill="none" stroke="#1d2630" stroke-width="5"/>
+        <rect x="220" y="55" width="100" height="18" rx="4" fill="#bf4a22"/>
+        <path d="M277 188 v90" stroke="#1d2630" stroke-width="2"/>
+        <path d="M250 278 h54" stroke="#1d2630" stroke-width="2"/>
+        <path d="M240 295 h74" stroke="#1a5fa3" stroke-width="2"/>
+        <text x="26" y="100" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">横针</text>
+        <text x="250" y="48" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">提升刀</text>
+        <text x="290" y="130" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">竖钩</text>
+        <text x="190" y="316" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">经线抬起，纬线从下面穿过</text>
+      </g>
+      <g>
+        <rect x="404" y="62" width="54" height="150" rx="5" fill="#efe9da" stroke="#b8862a" stroke-width="2"/>
+        <line x1="370" y1="112" x2="520" y2="112" stroke="#1a5fa3" stroke-width="4"/>
+        <path d="M520 112 v-42 h42 v118" fill="none" stroke="#1d2630" stroke-width="5" transform="rotate(8 520 112)"/>
+        <rect x="560" y="55" width="100" height="18" rx="4" fill="#bf4a22"/>
+        <path d="M566 188 v90" stroke="#1d2630" stroke-width="2"/>
+        <path d="M539 278 h54" stroke="#1d2630" stroke-width="2"/>
+        <path d="M529 295 h74" stroke="#1a5fa3" stroke-width="2"/>
+        <path d="M458 112 h28" stroke="#bf4a22" stroke-width="2" marker-end="url(#arrJ)"/>
+        <text x="382" y="100" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">横针</text>
+        <text x="590" y="48" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">提升刀</text>
+        <text x="575" y="130" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">竖钩偏开</text>
+        <text x="530" y="316" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">经线留在下面</text>
+      </g>
+      <defs>
+        <marker id="arrJ" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#bf4a22"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-2</span>孔和空白控制横针，横针控制竖钩，竖钩控制经线。图中省略了弹簧、绳索和配重。</figcaption>
+  </figure>
+
+  <p>一张卡片只给出一次选择。许多卡片按顺序连成环，才给出完整花纹。同一台织机换一串卡片，就能织另一种花纹。</p>
+
+  <figure class="diagram" aria-label="穿孔卡片序列与织物花纹的对应">
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="250" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">
+        <text x="170" y="26" text-anchor="middle">四张卡片：每张控制一排</text>
+        <text x="548" y="26" text-anchor="middle">四次选择形成四排花纹</text>
+      </g>
+      <g stroke="#b8862a" fill="#fff">
+        <rect x="35" y="45" width="270" height="36" rx="5"/>
+        <rect x="35" y="88" width="270" height="36" rx="5"/>
+        <rect x="35" y="131" width="270" height="36" rx="5"/>
+        <rect x="35" y="174" width="270" height="36" rx="5"/>
+      </g>
+      <g fill="#1a5fa3">
+        <circle cx="75" cy="63" r="7"/><circle cx="155" cy="63" r="7"/><circle cx="235" cy="63" r="7"/>
+        <circle cx="115" cy="106" r="7"/><circle cx="195" cy="106" r="7"/><circle cx="275" cy="106" r="7"/>
+        <circle cx="75" cy="149" r="7"/><circle cx="155" cy="149" r="7"/><circle cx="235" cy="149" r="7"/>
+        <circle cx="115" cy="192" r="7"/><circle cx="195" cy="192" r="7"/><circle cx="275" cy="192" r="7"/>
+      </g>
+      <path d="M326 126 h66" stroke="#1d2630" stroke-width="1.6" marker-end="url(#arrC)"/>
+      <g transform="translate(430 45)">
+        <rect width="240" height="164" fill="#fff" stroke="#1d2630"/>
+        <g stroke="#d9d2c2">
+          <path d="M40 0v164 M80 0v164 M120 0v164 M160 0v164 M200 0v164"/>
+          <path d="M0 41h240 M0 82h240 M0 123h240"/>
+        </g>
+        <g fill="#bf4a22">
+          <rect x="0" y="0" width="40" height="41"/><rect x="80" y="0" width="40" height="41"/><rect x="160" y="0" width="40" height="41"/>
+          <rect x="40" y="41" width="40" height="41"/><rect x="120" y="41" width="40" height="41"/><rect x="200" y="41" width="40" height="41"/>
+          <rect x="0" y="82" width="40" height="41"/><rect x="80" y="82" width="40" height="41"/><rect x="160" y="82" width="40" height="41"/>
+          <rect x="40" y="123" width="40" height="41"/><rect x="120" y="123" width="40" height="41"/><rect x="200" y="123" width="40" height="41"/>
+        </g>
+      </g>
+      <defs>
+        <marker id="arrC" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1d2630"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-3</span>卡片上的孔不是数字，而是一组“抬起或不抬起”的选择。卡片的顺序决定花纹各排的顺序。</figcaption>
+  </figure>
+
+  <p>这一步很重要：机器负责执行动作，卡片负责选择动作。巴贝奇后来借用了“把手续放在卡片上”的办法，但他要控制的不是经线，而是数字的运算。</p>
+
+  <h2>三、差分机为什么只用加法</h2>
+  <p>十九世纪的航海、天文和工程依赖对数表、三角函数表等数表。人工计算和排字都可能出错。查表时，一个错误数字就可能使后面的计算失准。</p>
+  <p>巴贝奇在 1822 年提出差分机，要自动计算并排印数表。它利用<strong>有限差分</strong>，把多项式的连续取值化成重复加法。</p>
+  <p>先看最简单的例子：计算 \(f(n)=n^2\)。把相邻两项相减，得到一阶差分；再把相邻的一阶差分相减，得到二阶差分。</p>
+
+  <table class="data-table" aria-label="平方数的有限差分表">
+    <thead>
+      <tr><th>\(n\)</th><th>\(f(n)=n^2\)</th><th>一阶差分</th><th>二阶差分</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0</td><td>0</td><td>1</td><td>2</td></tr>
+      <tr><td>1</td><td>1</td><td>3</td><td>2</td></tr>
+      <tr><td>2</td><td>4</td><td>5</td><td>2</td></tr>
+      <tr><td>3</td><td>9</td><td>7</td><td>2</td></tr>
+      <tr><td>4</td><td>16</td><td>9</td><td>2</td></tr>
+    </tbody>
+  </table>
+
+  <p>平方数的一阶差分是 1、3、5、7、9；二阶差分恒为 2。因此只要先放入 \(f=0\)、\(\Delta f=1\)、\(\Delta^2 f=2\)，后面就只需重复两次加法：</p>
+  <div class="formula">
+    \(f_{\text{新}}=f_{\text{旧}}+\Delta f_{\text{旧}},\qquad
+    \Delta f_{\text{新}}=\Delta f_{\text{旧}}+\Delta^2f\)
+  </div>
+  <p>更新顺序不能交换。先用旧的一阶差分更新函数值，再更新一阶差分。这样得到的函数值依次是 0、1、4、9、16。</p>
+
+  <figure class="diagram" aria-label="平方表的差分更新过程">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="300" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif" font-size="13">
+        <text x="130" y="30" text-anchor="middle" fill="#1d2630">函数值 f</text>
+        <text x="360" y="30" text-anchor="middle" fill="#1d2630">一阶差分 Δf</text>
+        <text x="590" y="30" text-anchor="middle" fill="#1d2630">二阶差分 Δ²f</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="24" text-anchor="middle">
+        <rect x="50" y="52" width="160" height="64" rx="10" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="130" y="92" fill="#1d2630">0</text>
+        <rect x="280" y="52" width="160" height="64" rx="10" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="360" y="92" fill="#1d2630">1</text>
+        <rect x="510" y="52" width="160" height="64" rx="10" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="590" y="92" fill="#1d2630">2</text>
+      </g>
+      <path d="M280 84 C245 84 245 150 210 150" fill="none" stroke="#b8862a" stroke-width="2" marker-end="url(#arrD)"/>
+      <text x="245" y="142" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">① 加 1</text>
+      <g font-family="JetBrains Mono, monospace" font-size="22" text-anchor="middle">
+        <rect x="50" y="166" width="160" height="54" rx="10" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="130" y="200" fill="#1d2630">1</text>
+        <rect x="280" y="166" width="160" height="54" rx="10" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="360" y="200" fill="#1d2630">3</text>
+        <rect x="510" y="166" width="160" height="54" rx="10" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="590" y="200" fill="#1d2630">2</text>
+      </g>
+      <path d="M510 84 C475 84 475 150 440 150" fill="none" stroke="#bf4a22" stroke-width="2" marker-end="url(#arrD)"/>
+      <text x="475" y="142" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">② 加 2</text>
+      <path d="M130 232 v34 h460 v-34" fill="none" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrD)"/>
+      <text x="360" y="286" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">转一圈后得到下一行；再转一圈得到 4、5、2。</text>
+      <defs>
+        <marker id="arrD" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1d2630"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-4</span>一次循环分成两个阶段：先把旧的一阶差分加到函数值，再把二阶差分加到一阶差分。</figcaption>
+  </figure>
+
+  <p>二次多项式的二阶差分恒定，三次多项式的三阶差分恒定。一般地，\(k\) 次多项式经过 \(k\) 次差分后得到常数。因此，只要预先算好开头的一列数，机器便能用逐级相加产生后续结果。对数和三角函数不是多项式，但可以把取值范围分段，在每一段用多项式近似。</p>
+
+  <h2>四、差分机里面怎样保存并相加</h2>
+  <p>差分机用十进制数字轮保存数。一个轮有 0 到 9 十个位置，多个轮竖直叠成一列：最下面是个位，向上依次是十位、百位。整列轮的位置就是一个多位数。</p>
+  <p>平方表至少需要三列：函数值、一阶差分、二阶差分。转动手柄时，机构分阶段把右边一列的数加到左边一列。某一位从 9 越过 0 时，进位机构让上一位再转一格。</p>
+
+  <figure class="diagram" aria-label="差分机的数字轮和差分列">
+    <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="400" fill="#FBF8F1"/>
+      <text x="360" y="28" text-anchor="middle" font-family="Newsreader, serif" font-size="16" fill="#1d2630">差分机的正面示意：每一列保存一个十进制数</text>
+      <rect x="66" y="48" width="588" height="300" rx="14" fill="#efe9da" stroke="#1d2630" stroke-width="2"/>
+      <g stroke="#8f8675" stroke-width="2" fill="#fff">
+        <circle cx="180" cy="105" r="34"/><circle cx="180" cy="178" r="34"/><circle cx="180" cy="251" r="34"/>
+        <circle cx="360" cy="105" r="34"/><circle cx="360" cy="178" r="34"/><circle cx="360" cy="251" r="34"/>
+        <circle cx="540" cy="105" r="34"/><circle cx="540" cy="178" r="34"/><circle cx="540" cy="251" r="34"/>
+      </g>
+      <g fill="none" stroke="#c4b89a">
+        <circle cx="180" cy="105" r="24" stroke-dasharray="3 4"/><circle cx="180" cy="178" r="24" stroke-dasharray="3 4"/><circle cx="180" cy="251" r="24" stroke-dasharray="3 4"/>
+        <circle cx="360" cy="105" r="24" stroke-dasharray="3 4"/><circle cx="360" cy="178" r="24" stroke-dasharray="3 4"/><circle cx="360" cy="251" r="24" stroke-dasharray="3 4"/>
+        <circle cx="540" cy="105" r="24" stroke-dasharray="3 4"/><circle cx="540" cy="178" r="24" stroke-dasharray="3 4"/><circle cx="540" cy="251" r="24" stroke-dasharray="3 4"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="22" fill="#1a5fa3" text-anchor="middle">
+        <text x="180" y="113">0</text><text x="180" y="186">0</text><text x="180" y="259">0</text>
+        <text x="360" y="113">0</text><text x="360" y="186">0</text><text x="360" y="259">1</text>
+        <text x="540" y="113">0</text><text x="540" y="186">0</text><text x="540" y="259">2</text>
+      </g>
+      <g font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470" text-anchor="end">
+        <text x="116" y="109">百位</text><text x="116" y="182">十位</text><text x="116" y="255">个位</text>
+      </g>
+      <g font-family="Public Sans, sans-serif" font-size="14" fill="#1d2630" text-anchor="middle">
+        <text x="180" y="326">函数值 000</text>
+        <text x="360" y="326">一阶差分 001</text>
+        <text x="540" y="326">二阶差分 002</text>
+      </g>
+      <path d="M515 286 h-105" stroke="#bf4a22" stroke-width="2" marker-end="url(#arrG)"/>
+      <path d="M335 302 h-105" stroke="#b8862a" stroke-width="2" marker-end="url(#arrG)"/>
+      <path d="M654 196 h36 v96 h-36" fill="none" stroke="#1d2630" stroke-width="3"/>
+      <circle cx="691" cy="196" r="14" fill="#fff" stroke="#1d2630" stroke-width="2"/>
+      <text x="360" y="380" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">手柄驱动各阶段；实际机器有更多数位、轴、齿轮和进位零件。</text>
+      <defs>
+        <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1d2630"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-5</span>三个竖直数字轮组成一个三位十进制数。列与列之间的传递实现逐级相加。</figcaption>
+  </figure>
+
+  <p>输出也是误差来源。如果人再把机器读数抄到纸上，仍可能抄错。巴贝奇因此让差分机带动打印机构，把结果直接排成表格，甚至制成印版。</p>
+  <p>第一台差分机没有在巴贝奇生前完整建成。后来依据他 1847—1849 年设计的第二号差分机图纸，伦敦科学博物馆在二十世纪末建成了可工作的机器。这说明有限差分和机械设计本身可以运行。</p>
+
+  <h2>五、差分机为什么还不是通用计算机</h2>
+  <p>差分机的列怎样连接、各阶段怎样转动，都是为有限差分预先安排的。它很擅长连续造表，却不能拿一串新步骤来计算任意算式。</p>
+  <p>若要从 \(n^2\) 改算另一类问题，人可以更换初始差分；但若要从“逐级相加”改成先乘、再判断、再重复，机器的控制结构就不够了。</p>
+  <p>巴贝奇约在 1834 年开始构想分析机，并在 1837 年写出较完整的说明。它不再把整项计算固定成一种齿轮连接，而是分成四个部分。</p>
+  <ol>
+    <li><strong>仓库。</strong>保存输入数字和中间结果。</li>
+    <li><strong>磨坊。</strong>取出数字，做加、减、乘、除，再送回结果。</li>
+    <li><strong>卡片与读卡机构。</strong>说明做什么运算，以及从仓库哪一列取数、把结果放回哪里。</li>
+    <li><strong>输出。</strong>打印数字、打孔保存，或绘制曲线。</li>
+  </ol>
+
+  <figure class="diagram" aria-label="分析机的仓库、磨坊、卡片和输出">
+    <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="360" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif">
+        <rect x="40" y="62" width="190" height="214" rx="14" fill="#e7f0f8" stroke="#1a5fa3" stroke-width="2"/>
+        <text x="135" y="92" text-anchor="middle" font-size="20" fill="#1d2630">仓库</text>
+        <text x="135" y="114" text-anchor="middle" font-size="12" fill="#5b6470">保存数字和中间结果</text>
+        <g font-family="JetBrains Mono, monospace" font-size="13">
+          <rect x="66" y="136" width="138" height="30" rx="5" fill="#fff" stroke="#9ab9d6"/><text x="135" y="156" text-anchor="middle" fill="#1d2630">V0 = 3</text>
+          <rect x="66" y="174" width="138" height="30" rx="5" fill="#fff" stroke="#9ab9d6"/><text x="135" y="194" text-anchor="middle" fill="#1d2630">V1 = 4</text>
+          <rect x="66" y="212" width="138" height="30" rx="5" fill="#fff" stroke="#9ab9d6"/><text x="135" y="232" text-anchor="middle" fill="#1d2630">V2 = 5</text>
+        </g>
+        <rect x="300" y="88" width="180" height="160" rx="14" fill="#fff7e8" stroke="#b8862a" stroke-width="2"/>
+        <text x="390" y="120" text-anchor="middle" font-size="20" fill="#1d2630">磨坊</text>
+        <text x="390" y="145" text-anchor="middle" font-size="13" fill="#5b6470">加 · 减 · 乘 · 除</text>
+        <circle cx="355" cy="190" r="28" fill="#fff" stroke="#b8862a"/><circle cx="425" cy="190" r="28" fill="#fff" stroke="#b8862a"/>
+        <path d="M383 190 h14" stroke="#1d2630" stroke-width="3"/>
+        <rect x="548" y="62" width="132" height="84" rx="12" fill="#efe9da" stroke="#bf4a22" stroke-width="2"/>
+        <text x="614" y="94" text-anchor="middle" font-size="17" fill="#1d2630">卡片</text>
+        <text x="614" y="118" text-anchor="middle" font-size="12" fill="#5b6470">操作与取数次序</text>
+        <rect x="548" y="210" width="132" height="66" rx="12" fill="#efe9da" stroke="#bf4a22" stroke-width="2"/>
+        <text x="614" y="238" text-anchor="middle" font-size="17" fill="#1d2630">输出</text>
+        <text x="614" y="260" text-anchor="middle" font-size="12" fill="#5b6470">打印 · 打孔 · 绘图</text>
+      </g>
+      <path d="M230 144 h70" stroke="#1a5fa3" stroke-width="2" marker-end="url(#arrA)"/>
+      <path d="M300 220 h-70" stroke="#1a5fa3" stroke-width="2" marker-end="url(#arrA)"/>
+      <path d="M548 104 h-68" stroke="#bf4a22" stroke-width="2" marker-end="url(#arrA)"/>
+      <path d="M480 220 h68" stroke="#bf4a22" stroke-width="2" marker-end="url(#arrA)"/>
+      <g font-family="Public Sans, sans-serif" font-size="11" fill="#5b6470">
+        <text x="265" y="135" text-anchor="middle">取数</text>
+        <text x="265" y="240" text-anchor="middle">存回</text>
+        <text x="514" y="94" text-anchor="middle">控制</text>
+        <text x="514" y="240" text-anchor="middle">结果</text>
+      </g>
+      <text x="360" y="326" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">数字轮仍用十进制；改变的是组织方式：存数、运算和控制不再挤在同一套固定机构里。</text>
+      <defs>
+        <marker id="arrA" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1d2630"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-6</span>仓库保存数，磨坊处理数，卡片决定处理次序。名称来自巴贝奇自己的设计。</figcaption>
+  </figure>
+
+  <h2>六、分析机怎样算 \((3+4)\times5\)</h2>
+  <p>为了看清各部分怎样配合，先把仓库的各列编号。令 V0 保存 3，V1 保存 4，V2 保存 5。V3 和 V4 暂时空着。</p>
+  <p>巴贝奇的设计把卡片分成不同种类。<strong>数卡</strong>把常数送入仓库；<strong>变量卡</strong>指定从仓库哪一列取数或向哪一列存数；<strong>操作卡</strong>指定磨坊做加、减、乘或除。实际设计使用分开的卡片链和读卡机构，下面按执行顺序合在一起写。</p>
+
+  <table class="data-table rules" aria-label="分析机计算三加四再乘五的步骤">
+    <thead>
+      <tr><th>步骤</th><th>卡片给出的动作</th><th>磨坊</th><th>仓库变化</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>取 V0 和 V1</td><td>读入 3、4</td><td>不变</td></tr>
+      <tr><td>2</td><td>操作：加</td><td>\(3+4=7\)</td><td>不变</td></tr>
+      <tr><td>3</td><td>存入 V3</td><td>送出 7</td><td>V3 = 7</td></tr>
+      <tr><td>4</td><td>取 V3 和 V2</td><td>读入 7、5</td><td>不变</td></tr>
+      <tr><td>5</td><td>操作：乘</td><td>\(7\times5=35\)</td><td>不变</td></tr>
+      <tr><td>6</td><td>存入 V4 并打印</td><td>送出 35</td><td>V4 = 35</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="diagram" aria-label="三类卡片控制一次具体计算">
+    <svg viewBox="0 0 720 310" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="310" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif">
+        <text x="90" y="28" text-anchor="middle" font-size="13" fill="#5b6470">按顺序读卡</text>
+        <text x="470" y="28" text-anchor="middle" font-size="13" fill="#5b6470">机器中的变化</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">
+        <rect x="24" y="48" width="132" height="34" rx="6" fill="#e7f0f8" stroke="#1a5fa3"/><text x="90" y="70" fill="#1d2630">取 V0, V1</text>
+        <rect x="24" y="90" width="132" height="34" rx="6" fill="#efe9da" stroke="#bf4a22"/><text x="90" y="112" fill="#1d2630">操作 +</text>
+        <rect x="24" y="132" width="132" height="34" rx="6" fill="#e7f0f8" stroke="#1a5fa3"/><text x="90" y="154" fill="#1d2630">存 V3</text>
+        <rect x="24" y="174" width="132" height="34" rx="6" fill="#e7f0f8" stroke="#1a5fa3"/><text x="90" y="196" fill="#1d2630">取 V3, V2</text>
+        <rect x="24" y="216" width="132" height="34" rx="6" fill="#efe9da" stroke="#bf4a22"/><text x="90" y="238" fill="#1d2630">操作 ×</text>
+        <rect x="24" y="258" width="132" height="34" rx="6" fill="#e7f0f8" stroke="#1a5fa3"/><text x="90" y="280" fill="#1d2630">存 V4</text>
+      </g>
+      <path d="M156 65 h90 v42 h70" fill="none" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrP)"/>
+      <path d="M156 107 h160" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrP)"/>
+      <path d="M156 149 h90 v-42 h70" fill="none" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrP)"/>
+      <path d="M156 191 h90 v56 h70" fill="none" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrP)"/>
+      <path d="M156 233 h160" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrP)"/>
+      <path d="M156 275 h90 v-28 h70" fill="none" stroke="#1d2630" stroke-width="1.5" marker-end="url(#arrP)"/>
+      <g font-family="Public Sans, sans-serif" text-anchor="middle">
+        <rect x="316" y="62" width="150" height="90" rx="12" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="391" y="90" font-size="17" fill="#1d2630">磨坊</text>
+        <text x="391" y="116" font-family="JetBrains Mono, monospace" font-size="16" fill="#1a5fa3">3 + 4 = 7</text>
+        <text x="391" y="138" font-size="12" fill="#5b6470">结果送到 V3</text>
+        <rect x="316" y="202" width="150" height="90" rx="12" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="391" y="230" font-size="17" fill="#1d2630">磨坊</text>
+        <text x="391" y="256" font-family="JetBrains Mono, monospace" font-size="16" fill="#1a5fa3">7 × 5 = 35</text>
+        <text x="391" y="278" font-size="12" fill="#5b6470">结果送到 V4</text>
+        <rect x="520" y="90" width="160" height="174" rx="12" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="600" y="118" font-size="17" fill="#1d2630">仓库</text>
+        <text x="600" y="148" font-family="JetBrains Mono, monospace" font-size="13" fill="#1d2630">V0  3</text>
+        <text x="600" y="171" font-family="JetBrains Mono, monospace" font-size="13" fill="#1d2630">V1  4</text>
+        <text x="600" y="194" font-family="JetBrains Mono, monospace" font-size="13" fill="#1d2630">V2  5</text>
+        <text x="600" y="217" font-family="JetBrains Mono, monospace" font-size="13" fill="#1a5fa3">V3  7</text>
+        <text x="600" y="240" font-family="JetBrains Mono, monospace" font-size="13" fill="#bf4a22">V4  35</text>
+      </g>
+      <path d="M466 107 h54 M466 247 h54" stroke="#1a5fa3" stroke-width="2" marker-end="url(#arrP)"/>
+      <defs>
+        <marker id="arrP" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1d2630"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-7</span>变量卡负责搬运数字，操作卡负责选择运算。中间结果 7 先存入仓库，下一步再取回。</figcaption>
+  </figure>
+
+  <p>这与第一章的人手计算一一对应：数字轮表示数，仓库记录数和中间结果，卡片给出运算次序。不同之处是，读、写、运算和转到下一步都准备由机器完成。</p>
+
+  <h2>七、重复和选择从哪里来</h2>
+  <p>若卡片只能从头到尾读一次，重复十次加法就要准备十份相同卡片。分析机的设计允许卡片链向后移动，再次经过同一段卡片。这样，一小段手续就能重复执行。</p>
+  <p>只会重复还不够。机器还要根据中间结果决定是否继续。例如不断从 \(x\) 中减 3，直到结果小于 3：</p>
+  <div class="formula">
+    \(\text{重复：若 }x\ge 3\text{，就令 }x\leftarrow x-3\text{；否则结束。}\)
+  </div>
+  <p>这里必须检查一次结果，再决定卡片链向后还是继续向前。巴贝奇的设计中有根据运算状态改变卡片前进方向的控制构想。不同年代的设计细节并不完全相同，而且整台分析机没有建成；但“重复一段卡片”和“按结果改变次序”已经进入设计。</p>
+
+  <figure class="diagram" aria-label="卡片循环与条件结束">
+    <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="720" height="260" fill="#FBF8F1"/>
+      <g font-family="Public Sans, sans-serif" text-anchor="middle">
+        <rect x="38" y="92" width="130" height="64" rx="10" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="103" y="120" font-size="15" fill="#1d2630">取出 x</text>
+        <text x="103" y="141" font-size="12" fill="#5b6470">变量卡</text>
+        <rect x="218" y="92" width="130" height="64" rx="10" fill="#fff7e8" stroke="#b8862a"/>
+        <text x="283" y="120" font-size="15" fill="#1d2630">计算 x − 3</text>
+        <text x="283" y="141" font-size="12" fill="#5b6470">操作卡</text>
+        <polygon points="468,70 552,124 468,178 384,124" fill="#efe9da" stroke="#bf4a22"/>
+        <text x="468" y="120" font-size="14" fill="#1d2630">结果仍 ≥ 3？</text>
+        <text x="468" y="140" font-size="11" fill="#5b6470">检查运算状态</text>
+        <rect x="592" y="92" width="94" height="64" rx="10" fill="#e7f0f8" stroke="#1a5fa3"/>
+        <text x="639" y="130" font-size="15" fill="#1d2630">结束</text>
+      </g>
+      <path d="M168 124 h50 M348 124 h36 M552 124 h40" stroke="#1d2630" stroke-width="1.6" marker-end="url(#arrL)"/>
+      <path d="M468 178 v42 H103 v-64" fill="none" stroke="#1a5fa3" stroke-width="2" marker-end="url(#arrL)"/>
+      <text x="565" y="112" font-family="Public Sans, sans-serif" font-size="12" fill="#5b6470">否</text>
+      <text x="452" y="214" font-family="Public Sans, sans-serif" font-size="12" fill="#1a5fa3">是：卡片退回，再做一遍</text>
+      <text x="360" y="42" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" fill="#5b6470">同一段卡片可以处理不同大小的 x；重复次数由中间结果决定。</text>
+      <defs>
+        <marker id="arrL" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#1d2630"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption><span class="n">图 3-8</span>向后读卡形成重复；检查中间结果决定继续还是结束。图示表达控制原理，不对应一套完整的历史零件图。</figcaption>
+  </figure>
+
+  <h2>八、洛芙莱斯看见了什么</h2>
+  <p>1843 年，奥古斯塔·艾达·洛芙莱斯翻译了一篇介绍分析机的论文，并写了篇幅更长的注释。注释 G 给出用分析机计算伯努利数的操作表，明确列出变量、运算和重复关系。这是现存最早公开发表的分析机算法之一。</p>
+  <p>她还指出，只要对象之间的关系能够用机器的符号和操作表示，机器处理的就不必只是普通数量。她用音乐中的音高关系作例子。这里并不是说分析机已经能播放音乐，而是说同一套“表示—记录—运算”可以用于不同对象。</p>
+  <p>分析机最终没有完整建成。巴贝奇不断修改设计，零件数量多，对制造精度和协调动作要求很高，资金与工程合作也中断过。留存下来的图纸、记号和试制部件，仍然清楚显示了仓库、磨坊、卡片控制、重复和输出这些部分。</p>
+
+  <h2>九、本章小结</h2>
+  <p>雅卡尔装置用一串穿孔卡片保存动作次序。差分机用有限差分把多项式造表化成重复加法，并用数字轮保存每一阶差分。分析机再把仓库、磨坊和卡片控制分开，使同一台机器能够按不同手续完成不同计算。</p>
+
+  <table class="data-table rules" aria-label="织机、差分机和分析机的比较">
+    <thead>
+      <tr><th>机器</th><th>保存什么</th><th>执行什么</th><th>怎样换任务</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>雅卡尔装置</td><td>每次抬哪些经线</td><td>选择并提升经线</td><td>换卡片链</td></tr>
+      <tr><td>差分机</td><td>函数值与各阶差分</td><td>按固定次序逐级相加</td><td>换初始差分，任务范围有限</td></tr>
+      <tr><td>分析机</td><td>数字、中间结果、操作次序</td><td>取数、四则运算、存回、输出</td><td>换数卡、变量卡和操作卡</td></tr>
+    </tbody>
+  </table>
 
   <div class="callout">
-    <b>预定要处理的事情。</b>
-    <ul>
-      <li>十八世纪的自动机：凸轮、滚筒等机构怎样保存一串动作。</li>
-      <li>雅卡尔织机：花纹在卡片上，织机本身不必为每一种布重造。</li>
-      <li>差分机与分析机：自动造表，再走到通用的「磨坊 + 仓库」。</li>
-      <li>洛芙莱斯：卡片上的手续可以不是普通算术。</li>
-      <li>为第四章铺路：已经有「换一套规则、同一台机器」；图灵机要问这套规则最简是什么。</li>
-    </ul>
+    <b>判断一台计算机器。</b>先找数怎样表示、保存在哪里，再找运算部件和控制次序。若控制次序可以更换，还要问它能否重复一段步骤，能否根据中间结果选择下一步。
   </div>
 
-  <p>这一章将接住第二章略去的复杂结构，所以此处先保留提纲。</p>
+  <div class="callout tail">
+    <b>下一章要解决的问题。</b>分析机给出了通用机器的主要部分，却仍是一座极其复杂的机械装置。若只保留“按确定规则计算”不可缺少的部分，最简单的模型需要什么？
+  </div>
 
   <nav class="chapter-nav">
     <a href="02-mechanical.html">上一章 · 计算工具简史</a>
@@ -54,6 +487,22 @@
   </nav>
 </article>
 
-<footer class="site-foot">计算机基础 · 第三章 · 从自动控制到分析机</footer>
+<footer class="site-foot">计算机基础 · 第三章 · 自动控制、差分机与分析机</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ]
+    });
+  }
+});
+</script>
 </body>
 </html>
